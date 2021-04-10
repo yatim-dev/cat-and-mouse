@@ -16,7 +16,7 @@ namespace cat_and_mouse.Domain
         public int Width { get; set; }
         public int Height { get; set; }
         //размер
-
+        //тИМА! пососи - губой тряси
         
     }
     
