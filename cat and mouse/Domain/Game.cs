@@ -15,9 +15,10 @@ namespace cat_and_mouse.Domain
     {
         public int Width { get; set; }
         public int Height { get; set; }
+
+        public Cheese Cheese { get; set; }
         //размер
-        //тИМА! пососи - губой тряси
-        
+
     }
     
     public class Cell
@@ -67,6 +68,11 @@ namespace cat_and_mouse.Domain
         
         //победа если съел мышку
         //проигрыш время истекло или мышь победила 
+    }
+
+    public class Cheese
+    {
+        
     }
     
     
