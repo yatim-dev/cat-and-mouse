@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace cat_and_mouse.Domain
 {
-    public enum GameStage //состяния игры
+    public enum GameStage //состяния игры//
     {
         PlayerChoose,
         MapChoose,
