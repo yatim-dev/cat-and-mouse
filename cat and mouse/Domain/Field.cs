@@ -6,7 +6,7 @@ using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
-    public class Map
+    public class Map 
     {
         public readonly MapCell[,] MapArray;
         public readonly Point InitialPosition;
