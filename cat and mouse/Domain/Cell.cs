@@ -4,7 +4,7 @@ namespace cat_and_mouse.Domain
 {
     public class Cell
     {
-        public List<Cell> CellStatusCat { get; set; }
+        public List<Cell> CellStatus { get; set; }
         /*
          * public List<Cell> CellStatusCat { get; set; }
          *    while(true){

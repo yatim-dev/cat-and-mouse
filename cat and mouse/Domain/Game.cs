@@ -12,12 +12,10 @@ namespace cat_and_mouse.Domain
         Game,
         EndGame
     }
-    public class Game
+    public class Game 
     {
-        public Player CatHuman;
-        public Player MouseHuman;
-        public Player CatAI;
-        public Player MouseAI;
+        public Player Cat;
+        public Player Mouse;
         public Tuple<Player> CurrentPlayers;// = new Tuple<Player>();
     }
 

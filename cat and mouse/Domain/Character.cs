@@ -2,6 +2,8 @@
 {
     public class Character
     {
-        
+        public Point Position;
+        //направление
+        //
     }
 }
