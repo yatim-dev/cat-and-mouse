@@ -3,7 +3,6 @@
     public class Cat : Character
     {
         public Point CatPosition;
-        
         //победа если съел мышку
         //проигрыш время истекло или мышь победила 
         //управление отдельно
