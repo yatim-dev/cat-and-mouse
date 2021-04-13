@@ -1,86 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using cat_and_mouse.Domain;
+using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
-    public class Field : Cell
+    public class Map 
     {
-        public Field(int width, int height)
+        public readonly MapCell[,] MapArray;
+        public readonly Point InitialPosition;
+        public readonly Point[] Cheese;
+
+        private Map(MapCell[,] mapArray, Point initialPosition, Point[] cheese)
         {
-            Width = width;
-            Height = height;
+            MapArray = mapArray;
+            InitialPosition = initialPosition;
+            Cheese = cheese;
+        }
+		
+        public static Map FromText(string text)
+        {
+            var lines = text.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return FromLines(lines);
         }
 
-        public event Action Updated;
-
-        public int Width { get; }
-        public int Height { get; }
-        
-        /*
-        public class Map
+        public static Map FromLines(string[] lines)
         {
-            public readonly Cell[,] Dungeon;
-            public readonly Point InitialPosition;
-            public readonly Point Exit;
-            public readonly Point[] Chests;
-
-            private Map(Cell[,] dungeon, Point initialPosition, Point exit, Point[] chests)
+            var dungeon = new MapCell[lines[0].Length, lines.Length];
+            var initialPosition = Point.Empty;
+            var cheese = new List<Point>();
+            for (var y = 0; y < lines.Length; y++)
             {
-                Dungeon = dungeon;
-                InitialPosition = initialPosition;
-                Exit = exit;
-                Chests = chests;
-            }
-		
-            public static Map FromText(string text)
-            {
-                var lines = text.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-                return FromLines(lines);
-            }
-
-            public static Map FromLines(string[] lines)
-            {
-                var dungeon = new Cell[lines[0].Length, lines.Length];
-                var initialPosition = Point.Empty;
-                var exit = Point.Empty;
-                var chests = new List<Point>();
-                for (var y = 0; y < lines.Length; y++)
+                for (var x = 0; x < lines[0].Length; x++)
                 {
-                    for (var x = 0; x < lines[0].Length; x++)
+                    switch (lines[y][x])
                     {
-                        switch (lines[y][x])
-                        {
-                            case '#':
-                                dungeon[x, y] = Cell.Wall;
-                                break;
-                            case 'P':
-                                dungeon[x, y] = Cell.Empty;
-                                initialPosition = new Point(x, y);
-                                break;
-                            case 'C':
-                                dungeon[x, y] = Cell.Empty;
-                                chests.Add(new Point(x, y));
-                                break;
-                            case 'E':
-                                dungeon[x, y] = Cell.Empty;
-                                exit = new Point(x, y);
-                                break;
-                            default:
-                                dungeon[x, y] = Cell.Empty;
-                                break;
-                        }
+                        case '#':
+                            dungeon[x, y] = MapCell.Wall;
+                            break;
+                        case 'P':
+                            dungeon[x, y] = MapCell.Empty;
+                            initialPosition = new Point(x, y);
+                            break;
+                        case 'C':
+                            dungeon[x, y] = MapCell.Empty;
+                            cheese.Add(new Point(x, y));
+                            break;
+                        default:
+                            dungeon[x, y] = MapCell.Empty;
+                            break;
                     }
                 }
-                return new Map(dungeon, initialPosition, exit, chests.ToArray());
             }
-
-            public bool InBounds(Point point)
-            {
-                var bounds = new Rectangle(0, 0, Dungeon.GetLength(0), Dungeon.GetLength(1));
-                return bounds.Contains(point);
-            }
+            return new Map(dungeon, initialPosition, cheese.ToArray());
         }
-    }*/
+
+        // public bool InBounds(Point point)
+        // {
+        //     var bounds = new Rectangle(0, 0, MapArray.GetLength(0), MapArray.GetLength(1));
+        //     return bounds.Contains(point);
+        // }
     }
 }
