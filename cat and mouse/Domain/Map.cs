@@ -10,9 +10,9 @@ namespace cat_and_mouse.Domain
     {
         public readonly MapCell[,] MapArray;
         public readonly Point InitialPosition;
-        public readonly Point[] Cheese;
+        public readonly Point Cheese;
 
-        private Map(MapCell[,] mapArray, Point initialPosition, Point[] cheese)
+        private Map(MapCell[,] mapArray, Point initialPosition, Point cheese)
         {
             MapArray = mapArray;
             InitialPosition = initialPosition;
@@ -27,9 +27,9 @@ namespace cat_and_mouse.Domain
 
         public static Map FromLines(string[] lines)
         {
-            var dungeon = new MapCell[lines[0].Length, lines.Length];
+            var mapCells = new MapCell[lines[0].Length, lines.Length];
             var initialPosition = Point.Empty;
-            var cheese = new List<Point>();
+            var cheese = Point.Empty;
             for (var y = 0; y < lines.Length; y++)
             {
                 for (var x = 0; x < lines[0].Length; x++)
@@ -37,29 +37,23 @@ namespace cat_and_mouse.Domain
                     switch (lines[y][x])
                     {
                         case '#':
-                            dungeon[x, y] = MapCell.Wall;
+                            mapCells[x, y] = MapCell.Wall;
                             break;
                         case 'P':
-                            dungeon[x, y] = MapCell.Empty;
+                            mapCells[x, y] = MapCell.Empty;
                             initialPosition = new Point(x, y);
                             break;
                         case 'C':
-                            dungeon[x, y] = MapCell.Empty;
-                            cheese.Add(new Point(x, y));
+                            mapCells[x, y] = MapCell.Empty;
+                            cheese = new Point(x, y);
                             break;
                         default:
-                            dungeon[x, y] = MapCell.Empty;
+                            mapCells[x, y] = MapCell.Empty;
                             break;
                     }
                 }
             }
-            return new Map(dungeon, initialPosition, cheese.ToArray());
+            return new Map(mapCells, initialPosition, cheese);
         }
-
-        // public bool InBounds(Point point)
-        // {
-        //     var bounds = new Rectangle(0, 0, MapArray.GetLength(0), MapArray.GetLength(1));
-        //     return bounds.Contains(point);
-        // }
     }
 }
