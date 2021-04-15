@@ -2,7 +2,7 @@
 {
     public class Mouse : Character
     {
-        public Point MousePosition;
+        public Vector MousePosition;
         
         //победа если съела сыр
         //проигрыш если кошка съела мышь

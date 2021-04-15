@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
+using System.Windows.Forms.PropertyGridInternal;
 
 namespace cat_and_mouse.Domain
 {
@@ -8,8 +10,8 @@ namespace cat_and_mouse.Domain
         private static IEnumerable<Map> LoadLevels()
         {
             yield return Map.FromText(Properties.Resources.Level1);
-            yield return Map.FromText(Properties.Resources.Level2);
-            yield return Map.FromText(Properties.Resources.Level3);
+            //yield return Map.FromText(Properties.Resources.Level2);
+            //yield return Map.FromText(Properties.Resources.Level3);
         }
     }
 }
