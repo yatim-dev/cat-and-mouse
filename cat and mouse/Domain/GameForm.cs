@@ -20,7 +20,7 @@ namespace cat_and_mouse.Domain
         }
         private static IEnumerable<Map> LoadLevels()
         {
-            var file = new StreamReader("Levels\\Level1.txt");
+            var file = new StreamReader("Levels\\Level1.txt");//
             yield return Map.FromText(file.ReadToEnd());
             //yield return Map.FromText(Properties.Resources.Level2);
             //yield return Map.FromText(Properties.Resources.Level3);
