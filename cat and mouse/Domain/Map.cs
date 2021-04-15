@@ -9,13 +9,15 @@ namespace cat_and_mouse.Domain
     public class Map 
     {
         public readonly MapCell[,] MapArray;
-        public readonly Point InitialPosition;
+        public readonly Point CatPosition;
+        public readonly Point MousePosition;
         public readonly Point Cheese;
 
-        private Map(MapCell[,] mapArray, Point initialPosition, Point cheese)
+        private Map(MapCell[,] mapArray, Point catPosition, Point mousePosition, Point cheese)
         {
             MapArray = mapArray;
-            InitialPosition = initialPosition;
+            CatPosition = catPosition;
+            MousePosition = mousePosition;
             Cheese = cheese;
         }
 		
@@ -28,8 +30,9 @@ namespace cat_and_mouse.Domain
         public static Map FromLines(string[] lines)
         {
             var mapCells = new MapCell[lines[0].Length, lines.Length];
-            var initialPosition = Point.Empty;
-            var cheese = Point.Empty;
+            var cheesePosition = Point.Empty;
+            var catPosition = Point.Empty;
+            var mousePosition = Point.Empty;
             for (var y = 0; y < lines.Length; y++)
             {
                 for (var x = 0; x < lines[0].Length; x++)
@@ -39,13 +42,17 @@ namespace cat_and_mouse.Domain
                         case '#':
                             mapCells[x, y] = MapCell.Wall;
                             break;
-                        case 'P':
+                        case 'M':
                             mapCells[x, y] = MapCell.Empty;
-                            initialPosition = new Point(x, y);
+                            mousePosition = new Point(x, y);
                             break;
                         case 'C':
                             mapCells[x, y] = MapCell.Empty;
-                            cheese = new Point(x, y);
+                            catPosition = new Point(x, y);
+                            break;
+                        case 'c':
+                            mapCells[x, y] = MapCell.Empty;
+                            cheesePosition = new Point(x, y);
                             break;
                         default:
                             mapCells[x, y] = MapCell.Empty;
@@ -53,7 +60,7 @@ namespace cat_and_mouse.Domain
                     }
                 }
             }
-            return new Map(mapCells, initialPosition, cheese);
+            return new Map(mapCells, catPosition, mousePosition, cheesePosition);
         }
     }
 }
