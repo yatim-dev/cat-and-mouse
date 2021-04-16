@@ -16,16 +16,21 @@ namespace cat_and_mouse.Domain
     {
         public GameForm()
         {
-            var huy = LoadLevels();
+            LoadLevels();
         }
-        private static IEnumerable<Map> LoadLevels()
+        private static void LoadLevels()
         {
-            var file = new StreamReader("Levels\\Level1.txt");//
-            yield return Map.FromText(file.ReadToEnd());
+           // var file = new StreamReader("Levels\\Level1.txt");//
+            DirectoryInfo list;
+           // yield return Map.FromText(file.ReadToEnd());
+           var levelsDirectory = new DirectoryInfo("Levels");
+            foreach (var e in levelsDirectory.GetFiles("*.txt"))
+                list = levelsDirectory;
+            var file = "";
             //yield return Map.FromText(Properties.Resources.Level2);
             //yield return Map.FromText(Properties.Resources.Level3);
-            
-            
+
+
         }
     }
 }
