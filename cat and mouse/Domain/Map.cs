@@ -7,33 +7,20 @@ using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
-    public class Map 
+    public static class Map 
     {
-        public readonly MapCell[,] MapArray;
-        public readonly Point CatPosition;
-        public readonly Point MousePosition;
-        public readonly Point Cheese;
+        public static MapCell[,] MapArray;
+        public static Point CatPosition;
+        public static Point MousePosition;
+        public static Point CheesePosition;
+        public static int MapWidth;
+        public static int MapHeight;
 
-        private Map(MapCell[,] mapArray, Point catPosition, Point mousePosition, Point cheese)
+        public static void FromLines(string[] lines)
         {
-            MapArray = mapArray;
-            CatPosition = catPosition;
-            MousePosition = mousePosition;
-            Cheese = cheese;
-        }
-		
-        public static Map FromText(string text)
-        {
-            var lines = text.Split(new[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            return FromLines(lines);
-        }
-
-        public static Map FromLines(string[] lines)
-        {
-            var mapCells = new MapCell[lines[0].Length, lines.Length];
-            var cheesePosition = Point.Empty;
-            var catPosition = Point.Empty;
-            var mousePosition = Point.Empty;
+            MapWidth = lines[0].Length;
+            MapHeight = lines.Length;
+            MapArray = new MapCell[MapWidth, MapHeight];
             for (var y = 0; y < lines.Length; y++)
             {
                 for (var x = 0; x < lines[0].Length; x++)
@@ -41,27 +28,26 @@ namespace cat_and_mouse.Domain
                     switch (lines[y][x])
                     {
                         case '#':
-                            mapCells[x, y] = MapCell.Wall;
+                            MapArray[x, y] = MapCell.Wall;
                             break;
                         case 'M':
-                            mapCells[x, y] = MapCell.Empty;
-                            mousePosition = new Point(x, y);
+                            MapArray[x, y] = MapCell.Empty;
+                            MousePosition = new Point(x, y);
                             break;
                         case 'C':
-                            mapCells[x, y] = MapCell.Empty;
-                            catPosition = new Point(x, y);
+                            MapArray[x, y] = MapCell.Empty;
+                            CatPosition = new Point(x, y);
                             break;
                         case 'c':
-                            mapCells[x, y] = MapCell.Empty;
-                            cheesePosition = new Point(x, y);
+                            MapArray[x, y] = MapCell.Empty;
+                            CheesePosition = new Point(x, y);
                             break;
                         default:
-                            mapCells[x, y] = MapCell.Empty;
+                            MapArray[x, y] = MapCell.Empty;
                             break;
                     }
                 }
             }
-            return new Map(mapCells, catPosition, mousePosition, cheesePosition);
         }
     }
 }
