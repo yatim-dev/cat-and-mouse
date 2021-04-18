@@ -15,7 +15,7 @@ namespace cat_and_mouse.Domain
     {
         private readonly Dictionary<string, Bitmap> bitmaps = new();//
         public const int ElementSize = 32;
-        public const string Path = @"C:\Users\warsd\RiderProjects\cat-and-mouse\cat and mouse\";
+        public const string MainPath = @"C:\Users\warsd\RiderProjects\cat-and-mouse\cat and mouse\";
         public GameForm()
         {
             // var imagesDirectory = new DirectoryInfo("Images");
@@ -27,17 +27,16 @@ namespace cat_and_mouse.Domain
 
         private static IEnumerable<Map> LoadLevels()
         {
-            const string pathForLevel1 = @"C:\Users\warsd\RiderProjects\cat-and-mouse\cat and mouse\Levels\Level1.txt";
-            var text = new StreamReader(pathForLevel1);
+            const string level1Path = @"Levels\Level1.txt";
+            var text = new StreamReader(MainPath + level1Path);
             
             yield return Map.FromText(text.ReadToEnd());
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var wallPath = Path + @"Pictures\wall.png";
-            var wall = Image.FromFile(wallPath);
-            var empty = Image.FromFile(Path + @"Pictures\empty.png");
+            var wall = Image.FromFile( MainPath + @"Pictures\wall.png");
+            var empty = Image.FromFile(MainPath + @"Pictures\empty.png");
             e.Graphics.FillRectangle(                                               //задний фон
                 Brushes.Black, 0, 0, ElementSize * Game.MapWidth,
                 ElementSize * Game.MapHeight);
