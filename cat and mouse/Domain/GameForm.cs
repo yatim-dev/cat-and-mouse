@@ -13,7 +13,7 @@ namespace cat_and_mouse.Domain
 {
     public class GameForm : Form
     {
-        private readonly Dictionary<string, Bitmap> bitmaps = new();
+        private readonly Dictionary<string, Bitmap> bitmaps = new();//
         public const int ElementSize = 32;
         public const string Path = @"C:\Users\warsd\RiderProjects\cat-and-mouse\cat and mouse\";
         public GameForm()
