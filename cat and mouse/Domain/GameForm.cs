@@ -4,10 +4,6 @@ using System.Windows.Forms;
 using System;
 using System.Drawing;
 
-/*
- * размер окна
- * вставка массива
- */
 namespace cat_and_mouse.Domain
 {
     public class GameForm : Form
