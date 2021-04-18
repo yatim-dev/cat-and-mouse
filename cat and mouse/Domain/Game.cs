@@ -24,6 +24,8 @@ namespace cat_and_mouse.Domain
         private int curentLevelID;
         public Player Cat;
         public Player Mouse;
+        public const int MapWidth = 600;
+        public const int MapHeight = 600;
 
         public Level CurentLevel
         {
