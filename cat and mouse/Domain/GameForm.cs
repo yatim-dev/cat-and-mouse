@@ -15,6 +15,7 @@ namespace cat_and_mouse.Domain
         public GameForm()
         {
             LoadLevels();
+            MaximizeBox = false;
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
         }
         
