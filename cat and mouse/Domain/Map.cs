@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using cat_and_mouse.Domain;
-using Point = System.Drawing.Point;
+﻿using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
