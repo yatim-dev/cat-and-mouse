@@ -9,7 +9,7 @@ namespace cat_and_mouse.Domain
 {
     public class GameForm : Form
     {
-        private const int ElementSize = 39;
+        private const int ElementSize = 40;//???
         private static readonly string MainPath = new DirectoryInfo
             (Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.ToString();
 
@@ -32,6 +32,8 @@ namespace cat_and_mouse.Domain
             var wall = Image.FromFile(MainPath + @"\Pictures\wall.png");
             var empty = Image.FromFile(MainPath + @"\Pictures\empty.png");
             var cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
+            var mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
+            var cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
             for (var i = 0; i < Map.MapWidth; i++)
             for (var j = 0; j < Map.MapHeight; j++)
             {
@@ -40,12 +42,11 @@ namespace cat_and_mouse.Domain
                 if (Map.MapArray[i, j] == MapCell.Empty)
                   e.Graphics.DrawImage(empty, (i) * ElementSize, (j) * ElementSize);
             }
-            // e.Graphics.DrawImage(empty, 0, 0);
-            // e.Graphics.DrawImage(wall, 0, ElementSize+8);
-            // e.Graphics.DrawImage(wall, 0, 2*ElementSize+16);
 
-            // Debug.Print(ElementSize + " " + wall.Height);
-            e.Graphics.DrawImage(cat,ElementSize,ElementSize);
+            e.Graphics.DrawImage(cat,Map.CatPosition.X * ElementSize,Map.CatPosition.Y * ElementSize);
+            e.Graphics.DrawImage(mouse,Map.MousePosition.X * ElementSize,Map.MousePosition.Y * ElementSize);
+            e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
+
         }
     }
 }
