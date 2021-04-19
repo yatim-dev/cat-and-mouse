@@ -75,12 +75,10 @@ namespace cat_and_mouse.Domain
                 if ((wall.Center - Location).Length > viewDistance)
                     continue;
                 var point = GetIntersectionPoint(wall);
-                if (closestPoint == null ||
-                    (point != null && (point - Location).Length < (closestPoint - Location).Length))
-                {
-                    closestPoint = point;
-                    closestWall = wall;
-                }
+                if (closestPoint != null &&
+                    (point == null || !((point - Location).Length < (closestPoint - Location).Length))) continue;
+                closestPoint = point;
+                closestWall = wall;
             }
 
             return Tuple.Create(closestPoint, closestWall);

@@ -18,7 +18,7 @@ namespace cat_and_mouse
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+            //4
             Application.Run(new GameForm());
         }
     }

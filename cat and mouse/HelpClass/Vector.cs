@@ -20,7 +20,7 @@ namespace cat_and_mouse.Domain
 		public readonly float Y;
 		public float Length { get { return (float)Math.Sqrt(X * X + Y * Y); } }
 		public double Angle { get { return Math.Atan2(Y, X); } }
-		public static Vector Zero = new Vector(0, 0);
+		public static Vector Zero { get; } = new Vector(0, 0);
 
 		public override string ToString()
 		{

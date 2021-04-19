@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 using System;
 using System.Drawing;
@@ -8,7 +7,6 @@ namespace cat_and_mouse.Domain
 {
     public class GameForm : Form
     {
-        private readonly Dictionary<string, Bitmap> bitmaps = new();//
         private const int ElementSize = 32;
         public const string MainPath = @"C:\Users\warsd\RiderProjects\cat-and-mouse\cat and mouse\";
         
@@ -27,15 +25,17 @@ namespace cat_and_mouse.Domain
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(                                               //задний фон
-                Brushes.Black, 0, 0, ElementSize * Game.MapWidth,
-                ElementSize * Game.MapHeight);
+            // e.Graphics.FillRectangle(                                               
+            //     Brushes.Black, 0, 0, ElementSize * Game.MapWidth,
+            //     ElementSize * Game.MapHeight);
             var wall = Image.FromFile(MainPath + @"Pictures\wall.png");
             var empty = Image.FromFile(MainPath + @"Pictures\empty.png");
             for (var i = 0; i < Map.MapWidth; i++)
             for (var j = 0; j < Map.MapHeight; j++)
             {
-                //(Map.MapArray[i, j] == MapCell.Wall) ? e.Graphics.DrawImage(wall, 0,0) : e.Graphics.DrawImage(empty, 0,0);
+                //(Map.MapArray[i, j] == MapCell.Wall)
+                //? e.Graphics.DrawImage(wall, i * ElementSize, j * ElementSize)
+                //: e.Graphics.DrawImage(empty, i * ElementSize, j * ElementSize);
                 if (Map.MapArray[i, j] == MapCell.Wall)
                     e.Graphics.DrawImage(wall, i * ElementSize, j * ElementSize);
                 if(Map.MapArray[i,j] == MapCell.Empty)
