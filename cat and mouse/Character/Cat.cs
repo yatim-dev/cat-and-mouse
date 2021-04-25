@@ -7,7 +7,7 @@ namespace cat_and_mouse.Domain
         //победа если съел мышку
         //проигрыш время истекло или мышь победила 
         //управление отдельно
-        public Cat(int x, int y, Image character) : base(x, y, character)
+        public Cat(int x, int y) : base(x, y)
         {
         }
     }

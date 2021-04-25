@@ -8,7 +8,7 @@ namespace cat_and_mouse.Domain
         //победа если съела сыр
         //проигрыш если кошка съела мышь
 
-        public Mouse(int x, int y, Image character) : base(x, y, character)
+        public Mouse(int x, int y) : base(x, y)
         {
         }
     }
