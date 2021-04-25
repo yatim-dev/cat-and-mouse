@@ -1,4 +1,5 @@
-﻿using Point = System.Drawing.Point;
+﻿using System.Drawing;
+using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
@@ -42,6 +43,20 @@ namespace cat_and_mouse.Domain
                             break;
                     }
                 }
+            }
+        }
+
+        public static void DrawMap(Graphics e)
+        {
+            var wall = Image.FromFile(GameForm.MainPath + @"\Pictures\wall.png");
+            var empty = Image.FromFile(GameForm.MainPath + @"\Pictures\empty.png");
+            for (var i = 0; i < MapWidth; i++)
+            for (var j = 0; j < MapHeight; j++)
+            {
+                if (MapArray[i, j] == MapCell.Wall)
+                    e.DrawImage(wall, (i) * GameForm.ElementSize, (j) * GameForm.ElementSize);
+                if (MapArray[i, j] == MapCell.Empty)
+                    e.DrawImage(empty, (i) * GameForm.ElementSize, (j) * GameForm.ElementSize);
             }
         }
     }

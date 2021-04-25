@@ -1,12 +1,26 @@
-﻿namespace cat_and_mouse.Domain
+﻿using System.Drawing;
+
+namespace cat_and_mouse.Domain
 {
     public class Character
     {
-        public Vector Position;
+        public Point position;
+        public Image character;
         public bool Alive = true;//жив
-        public double Speed { get; protected set; }//скорость
+        public int Size;
         
-        //направление
-        //
+        public Character(int x, int y, Image character)
+        {
+            position.X = x;
+            position.Y = y;
+            this.character = character;
+            Size = 40;
+        }
+
+        public void Move(int deltaX, int deltaY)
+        {
+            position.X += deltaX;
+            position.Y += deltaY;
+        }
     }
 }
