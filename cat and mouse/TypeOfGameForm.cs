@@ -21,9 +21,9 @@ namespace cat_and_mouse
 
         public Character CatPlayer;
         public Character MousePlayer;
-        // private bool isFirstA = true;
-        // private bool isFirstD = true;
-        // private bool realFirst = true;
+        private bool isFirstA = true;
+        private bool isFirstD = true;
+        private bool realFirst = true;
         public readonly Image Cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
         public readonly Image Mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
         private readonly Image cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
@@ -52,25 +52,24 @@ namespace cat_and_mouse
                     break;
                 case Keys.A:
                     CatPlayer.Move(-1, 0);
-                    // isFirstD = true;
-                    // if (isFirstA && !realFirst)
-                    // {
-                    //     Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                    //     isFirstA = false;
-                    // }
-                    //
-                    // realFirst = false;
+                    isFirstD = true;
+                    realFirst = false;
+                    if (isFirstA && !realFirst)
+                    {
+                        Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
+                        isFirstA = false;
+                    }
+                    realFirst = false;
                     break;
                 case Keys.D:
                     CatPlayer.Move(1, 0);
-                    // isFirstA = true;
-                    // if (isFirstD&& !realFirst)
-                    // {
-                    //     Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                    //     isFirstD = false;
-                    // }
-                    //
-                    // realFirst = false;
+                    isFirstA = true;
+                    if (isFirstD && !realFirst)
+                    {
+                        Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
+                        isFirstD = false;
+                        realFirst = false;
+                    }
                     break;
             }
             switch (e.KeyCode)
@@ -113,9 +112,8 @@ namespace cat_and_mouse
             var g = e.Graphics;
             Map.DrawMap(g);
             e.Graphics.DrawImage(Cat, CatPlayer.position.X * ElementSize, CatPlayer.position.Y * ElementSize);
-            e.Graphics.DrawImage(Mouse,MousePlayer.position.X * ElementSize,MousePlayer.position.Y * ElementSize);
-            /* e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
-             */
+            //e.Graphics.DrawImage(Mouse,MousePlayer.position.X * ElementSize,MousePlayer.position.Y * ElementSize);
+            //e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
 
         }
     }

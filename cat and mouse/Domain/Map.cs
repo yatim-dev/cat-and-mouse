@@ -58,6 +58,7 @@ namespace cat_and_mouse.Domain
                 if (MapArray[i, j] == MapCell.Empty)
                     e.DrawImage(empty, (i) * TypeOfGameForm.ElementSize, (j) * TypeOfGameForm.ElementSize);
             }
+            //e.DrawImage(ch, 30, 30);
         }
     }
 }
