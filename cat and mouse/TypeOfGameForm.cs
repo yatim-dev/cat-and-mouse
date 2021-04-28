@@ -108,7 +108,7 @@ namespace cat_and_mouse
         }
         private static void LoadLevels()
         {
-            var text = new StreamReader(MainPath + @"\Levels\Level1.txt").ReadToEnd();
+            var text = new StreamReader(MainPath + @"\Levels\Level2.txt").ReadToEnd();
             var lines = text.Split(new[] {"\r", "\n"}, StringSplitOptions.RemoveEmptyEntries);
             Map.FromLines(lines);
         }
