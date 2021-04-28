@@ -57,7 +57,6 @@ namespace cat_and_mouse
                         Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
                         isFirstLeft = false;
                     }
-                    realFirst = false;
                     break;
                 case Keys.D:
                     CatPlayer.Move(1, 0, CatPlayer);
