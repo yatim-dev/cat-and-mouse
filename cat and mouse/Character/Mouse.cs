@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace cat_and_mouse.Domain
 {
@@ -19,7 +20,7 @@ namespace cat_and_mouse.Domain
             if (MousePlayer.Position.X == Map.CheesePosition.X
                 && MousePlayer.Position.Y == Map.CheesePosition.Y)
             {
-                throw new Exception("Эмм.... дальше пилить надо");
+                //throw new Exception("Эмм.... дальше пилить надо");
             }
         }
     }
