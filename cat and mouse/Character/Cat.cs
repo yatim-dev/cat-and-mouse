@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace cat_and_mouse.Domain
 {
@@ -9,6 +10,15 @@ namespace cat_and_mouse.Domain
         //управление отдельно
         public Cat(int x, int y) : base(x, y)
         {
+        }
+
+        public void StateCheck(Character CatPlayer, Character MousePlayer)
+        {
+            if (CatPlayer.Position.X == MousePlayer.Position.X
+                && CatPlayer.Position.Y == MousePlayer.Position.Y)
+            {
+                throw new Exception("Бе-бе-бе");
+            }
         }
     }
 }

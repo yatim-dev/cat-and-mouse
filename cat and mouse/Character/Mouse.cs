@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace cat_and_mouse.Domain
 {
@@ -10,6 +11,16 @@ namespace cat_and_mouse.Domain
 
         public Mouse(int x, int y) : base(x, y)
         {
+            
+        }
+
+        public void StateCheck(Character MousePlayer)
+        {
+            if (MousePlayer.Position.X == Map.CheesePosition.X
+                && MousePlayer.Position.Y == Map.CheesePosition.Y)
+            {
+                throw new Exception("Эмм.... дальше пилить надо");
+            }
         }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
 
@@ -19,8 +14,8 @@ namespace cat_and_mouse
         public static readonly string MainPath = new DirectoryInfo
             (Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.ToString();
 
-        public Character CatPlayer;
-        public Character MousePlayer;
+        public Cat CatPlayer;
+        public Mouse MousePlayer;
         private bool isFirstA = true;
         private bool isFirstD = true;
         private bool realFirst = true;
@@ -45,13 +40,16 @@ namespace cat_and_mouse
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    CatPlayer.Move(0, -1);
+                    CatPlayer.Move(0, -1, CatPlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
                 case Keys.S:
-                    CatPlayer.Move(0, 1);
+                    CatPlayer.Move(0, 1, CatPlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
                 case Keys.A:
-                    CatPlayer.Move(-1, 0);
+                    CatPlayer.Move(-1, 0, CatPlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     isFirstD = true;
                     realFirst = false;
                     if (isFirstA && !realFirst)
@@ -62,7 +60,8 @@ namespace cat_and_mouse
                     realFirst = false;
                     break;
                 case Keys.D:
-                    CatPlayer.Move(1, 0);
+                    CatPlayer.Move(1, 0, CatPlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     isFirstA = true;
                     if (isFirstD && !realFirst)
                     {
@@ -71,20 +70,25 @@ namespace cat_and_mouse
                         realFirst = false;
                     }
                     break;
-            }
-            switch (e.KeyCode)
-            {
-                 case Keys.Up:
-                    MousePlayer.Move(0, -1);
+                case Keys.Up:
+                    MousePlayer.Move(0, -1, MousePlayer);
+                    MousePlayer.StateCheck(MousePlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
                 case Keys.Down:
-                    MousePlayer.Move(0, 1);
+                    MousePlayer.Move(0, 1, MousePlayer);
+                    MousePlayer.StateCheck(MousePlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
                 case Keys.Left:
-                    MousePlayer.Move(-1, 0);
+                    MousePlayer.Move(-1, 0, MousePlayer);
+                    MousePlayer.StateCheck(MousePlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
                 case Keys.Right:
-                    MousePlayer.Move(1, 0);
+                    MousePlayer.Move(1, 0, MousePlayer);
+                    MousePlayer.StateCheck(MousePlayer);
+                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
                     break;
             }
         }
@@ -97,8 +101,9 @@ namespace cat_and_mouse
 
         public void Initialize()
         {
-            CatPlayer = new Character(1,1);
-            MousePlayer = new Character(2, 1);
+            CatPlayer = new Cat(Map.CatPosition.X, Map.CatPosition.Y);
+            MousePlayer = new Mouse(Map.MousePosition.X, Map.MousePosition.Y);
+            
             timer.Start();
         }
 
@@ -109,11 +114,10 @@ namespace cat_and_mouse
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var g = e.Graphics;
-            Map.DrawMap(g);
-            e.Graphics.DrawImage(Cat, CatPlayer.position.X * ElementSize, CatPlayer.position.Y * ElementSize);
-            //e.Graphics.DrawImage(Mouse,MousePlayer.position.X * ElementSize,MousePlayer.position.Y * ElementSize);
-            //e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
+            Map.DrawMap(e.Graphics);
+            e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
+            e.Graphics.DrawImage(Cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
+            e.Graphics.DrawImage(Mouse,MousePlayer.Position.X * ElementSize,MousePlayer.Position.Y * ElementSize);
 
         }
     }

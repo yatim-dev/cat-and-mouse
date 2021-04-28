@@ -3,7 +3,7 @@ using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
 {
-    public static class Map 
+    public static class Map
     {
         public static MapCell[,] MapArray;
         public static Point CatPosition;
@@ -58,7 +58,6 @@ namespace cat_and_mouse.Domain
                 if (MapArray[i, j] == MapCell.Empty)
                     e.DrawImage(empty, (i) * TypeOfGameForm.ElementSize, (j) * TypeOfGameForm.ElementSize);
             }
-            //e.DrawImage(ch, 30, 30);
         }
     }
 }

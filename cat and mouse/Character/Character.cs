@@ -1,25 +1,25 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace cat_and_mouse.Domain
 {
     public class Character
     {
-        public Point position;
+        public Point Position;
         public bool Alive = true;
-        public int Size;
         
         public Character(int x, int y)
         {
-            position.X = x;
-            position.Y = y;
-            Size = 40;
+            Position.X = x;
+            Position.Y = y;
         }
 
-        public void Move(int deltaX, int deltaY)
+        public void Move(int deltaX, int deltaY, Character character)
         {
-            //PhysicsMap.IsCollide(TypeOfGameForm.)
-            position.X += deltaX;
-            position.Y += deltaY;
+            var deltaPosition = (deltaX, deltaY);
+            deltaPosition = PhysicsMap.IsCollide(character, deltaPosition);
+            Position.X += deltaPosition.deltaX;
+            Position.Y += deltaPosition.deltaY;
         }
     }
 }
