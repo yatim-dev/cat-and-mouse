@@ -15,12 +15,13 @@ namespace cat_and_mouse.Domain
             
         }
 
-        public void StateCheck(Character MousePlayer)
+        public void StateCheck(Character mousePlayer)
         {
-            if (MousePlayer.Position.X == Map.CheesePosition.X
-                && MousePlayer.Position.Y == Map.CheesePosition.Y)
+            if (mousePlayer.Position.X == Map.CheesePosition.X
+                && mousePlayer.Position.Y == Map.CheesePosition.Y)
             {
-                //throw new Exception("Эмм.... дальше пилить надо");
+                throw new Exception("Эмм.... дальше пилить надо");
+                //TypeOfGameForm.ActiveForm.Mes
             }
         }
     }

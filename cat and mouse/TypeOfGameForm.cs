@@ -16,21 +16,29 @@ namespace cat_and_mouse
 
         public Cat CatPlayer;
         public Mouse MousePlayer;
+        
+        GameState currentGameState = GameState.Game;
+        
         private bool isFirstLeft = true;
         private bool isFirstRight = true;
         private bool realFirst = true;
+        
+        public static Bitmap Pause = new(TypeOfGameForm.MainPath + @"\Pictures\pause.png");
+        private Bitmap Menu = new Bitmap(MainPath + @"\Pictures\menu.png");
+        
         public readonly Image Cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
         public readonly Image Mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
         private readonly Image cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
         public TypeOfGameForm()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterScreen;
             DoubleBuffered = true;
             timer.Interval = 20;
             timer.Tick += Update;
-            LoadLevels();
             MaximizeBox = false;
-            ClientSize = new Size((Map.MapWidth) * ElementSize, (Map.MapHeight) * ElementSize);
+            LoadLevels();
+            ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
             Initialize();
             KeyDown += OnPress;
         }
@@ -104,6 +112,9 @@ namespace cat_and_mouse
                         realFirst = false;
                     }
                     break;
+                case Keys.Escape:
+                    currentGameState = GameState.Pause;
+                    break;
             }
         }
         private static void LoadLevels()
@@ -117,7 +128,6 @@ namespace cat_and_mouse
         {
             CatPlayer = new Cat(Map.CatPosition.X, Map.CatPosition.Y);
             MousePlayer = new Mouse(Map.MousePosition.X, Map.MousePosition.Y);
-            
             timer.Start();
         }
 
@@ -128,11 +138,28 @@ namespace cat_and_mouse
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Map.DrawMap(e.Graphics);
-            e.Graphics.DrawImage(cheese,Map.CheesePosition.X * ElementSize,Map.CheesePosition.Y * ElementSize);
-            e.Graphics.DrawImage(Cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
-            e.Graphics.DrawImage(Mouse,MousePlayer.Position.X * ElementSize,MousePlayer.Position.Y * ElementSize);
+            if (currentGameState == GameState.Game)
+            {
+                Map.DrawMap(e.Graphics);
+                e.Graphics.DrawImage(cheese, Map.CheesePosition.X * ElementSize, Map.CheesePosition.Y * ElementSize);
+                e.Graphics.DrawImage(Cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
+                e.Graphics.DrawImage(Mouse, MousePlayer.Position.X * ElementSize, MousePlayer.Position.Y * ElementSize);
+            }
+            if (currentGameState == GameState.Pause)
+            {
+                Hide();
+                PauseForm.DrawPause(Pause.Width, Pause.Height, e);
+                e.Graphics.DrawImage(Pause, 0, 0);
+            }
+        }
+        
 
+
+        private void DrawMenu(Graphics graphics)
+        {
+            graphics.DrawImage(Menu, 0, 0, Map.MapWidth * ElementSize , Map.MapHeight*ElementSize);
+            //start.Location = new Point(Width / 2 - 100, Height / 2 - 25);
+            //Controls.Add(start);
         }
     }
 }
