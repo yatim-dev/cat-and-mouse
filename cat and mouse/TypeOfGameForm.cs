@@ -36,6 +36,7 @@ namespace cat_and_mouse
             MaximizeBox = false;
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
+            clientSize = ClientSize;
             Initialize();
             KeyDown += OnPress;
         }
@@ -77,6 +78,10 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(Pause.Width, Pause.Height);
                 e.Graphics.DrawImage(Pause, 0, 0);
+                Button a = new Button();
+                a.Width = 100;
+                a.Height = 70;
+                a.Show();
             }
 
             if (currentGameState == GameState.MapChoose)
