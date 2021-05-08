@@ -16,19 +16,16 @@ namespace cat_and_mouse
 
         public Cat CatPlayer;
         public Mouse MousePlayer;
-        
-        GameState currentGameState = GameState.Game;
-        
-        private bool isFirstLeft = true;
-        private bool isFirstRight = true;
-        private bool realFirst = true;
-        
+
+        public static GameState currentGameState = GameState.Game;
+
         public static Bitmap Pause = new(TypeOfGameForm.MainPath + @"\Pictures\pause.png");
-        private Bitmap Menu = new Bitmap(MainPath + @"\Pictures\menu.png");
+        private Bitmap Menu = new(MainPath + @"\Pictures\menu.png");
         
         public readonly Image Cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
         public readonly Image Mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
         private readonly Image cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
+        private Size clientSize; 
         public TypeOfGameForm()
         {
             InitializeComponent();
@@ -45,81 +42,12 @@ namespace cat_and_mouse
         
         public void OnPress(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.W:
-                    CatPlayer.Move(0, -1, CatPlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    break;
-                case Keys.S:
-                    CatPlayer.Move(0, 1, CatPlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    break;
-                case Keys.A:
-                    CatPlayer.Move(-1, 0, CatPlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    isFirstRight = true;
-                    realFirst = false;
-                    if (isFirstLeft && !realFirst)
-                    {
-                        Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstLeft = false;
-                    }
-                    break;
-                case Keys.D:
-                    CatPlayer.Move(1, 0, CatPlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    isFirstLeft = true;
-                    if (isFirstRight && !realFirst)
-                    {
-                        Cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstRight = false;
-                        realFirst = false;
-                    }
-                    break;
-                case Keys.Up:
-                    MousePlayer.Move(0, -1, MousePlayer);
-                    MousePlayer.StateCheck(MousePlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    break;
-                case Keys.Down:
-                    MousePlayer.Move(0, 1, MousePlayer);
-                    MousePlayer.StateCheck(MousePlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    break;
-                case Keys.Left:
-                    MousePlayer.Move(-1, 0, MousePlayer);
-                    MousePlayer.StateCheck(MousePlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    isFirstRight = true;
-                    realFirst = false;
-                    if (isFirstLeft && !realFirst)
-                    {
-                        Mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstLeft = false;
-                    }
-                    realFirst = false;
-                    break;
-                case Keys.Right:
-                    MousePlayer.Move(1, 0, MousePlayer);
-                    MousePlayer.StateCheck(MousePlayer);
-                    CatPlayer.StateCheck(CatPlayer, MousePlayer);
-                    isFirstLeft = true;
-                    if (isFirstRight && !realFirst)
-                    {
-                        Mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstRight = false;
-                        realFirst = false;
-                    }
-                    break;
-                case Keys.Escape:
-                    currentGameState = GameState.Pause;
-                    break;
-            }
+            Manipulator.OnClick(CatPlayer, Cat, MousePlayer, Mouse, e, ref clientSize, ElementSize);
+            ClientSize = clientSize;
         }
         private static void LoadLevels()
         {
-            var text = new StreamReader(MainPath + @"\Levels\Level2.txt").ReadToEnd();
+            var text = new StreamReader(MainPath + @"\Levels\Level1.txt").ReadToEnd();
             var lines = text.Split(new[] {"\r", "\n"}, StringSplitOptions.RemoveEmptyEntries);
             Map.FromLines(lines);
         }
@@ -147,19 +75,19 @@ namespace cat_and_mouse
             }
             if (currentGameState == GameState.Pause)
             {
-                Hide();
-                PauseForm.DrawPause(Pause.Width, Pause.Height, e);
+                ClientSize = new Size(Pause.Width, Pause.Height);
                 e.Graphics.DrawImage(Pause, 0, 0);
             }
-        }
-        
 
+            if (currentGameState == GameState.MapChoose)
+            {
+                
+            }
 
-        private void DrawMenu(Graphics graphics)
-        {
-            graphics.DrawImage(Menu, 0, 0, Map.MapWidth * ElementSize , Map.MapHeight*ElementSize);
-            //start.Location = new Point(Width / 2 - 100, Height / 2 - 25);
-            //Controls.Add(start);
+            if (currentGameState == GameState.PlayerChoose)
+            {
+                
+            }
         }
     }
 }
