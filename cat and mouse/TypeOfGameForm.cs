@@ -19,7 +19,7 @@ namespace cat_and_mouse
 
         public static GameState currentGameState = GameState.Game;
 
-        public static Bitmap Pause = new(TypeOfGameForm.MainPath + @"\Pictures\pause.png");
+        public static Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
         private Bitmap Menu = new(MainPath + @"\Pictures\menu.png");
         
         public readonly Image Cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
@@ -37,6 +37,7 @@ namespace cat_and_mouse
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
             clientSize = ClientSize;
+            MinimumSize = ClientSize;
             Initialize();
             KeyDown += OnPress;
         }
@@ -78,10 +79,6 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(Pause.Width, Pause.Height);
                 e.Graphics.DrawImage(Pause, 0, 0);
-                Button a = new Button();
-                a.Width = 100;
-                a.Height = 70;
-                a.Show();
             }
 
             if (currentGameState == GameState.MapChoose)
