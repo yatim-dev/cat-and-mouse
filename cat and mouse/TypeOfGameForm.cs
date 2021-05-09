@@ -19,31 +19,35 @@ namespace cat_and_mouse
 
         public static GameState currentGameState = GameState.MapChoose;
 
-        public static Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
-        private Bitmap Menu = new(MainPath + @"\Pictures\menu.png");
+        private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
+        private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
 
-        public readonly Image Cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
-        public readonly Image Mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
+        private readonly Image cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
+        private readonly Image mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
         private readonly Image cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
+        private readonly Image catWin = Image.FromFile(MainPath + @"\Pictures\catWin.png");
+        private readonly Image mouseWin = Image.FromFile(MainPath + @"\Pictures\mouseWin.png");
+
+        
+        
         private Size clientSize;
         private static string levelNumber;
 
         public TypeOfGameForm()
         {
-            InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
+            InitializeComponent();
             DoubleBuffered = true;
             timer.Interval = 20;
             timer.Tick += Update;
             MaximizeBox = false;
-            //MinimumSize = ClientSize;
-            Initialize();
+            clientSize = new Size(menu.Width, menu.Height);
             KeyDown += OnPress;
         }
 
         public void OnPress(object sender, KeyEventArgs e)
         {
-            Manipulator.OnClick(CatPlayer, Cat, MousePlayer, Mouse, e, ref clientSize, ElementSize);
+            Manipulator.OnClick(CatPlayer, cat, MousePlayer, mouse, e, ref clientSize, ElementSize);
             ClientSize = clientSize;
         }
 
@@ -74,9 +78,9 @@ namespace cat_and_mouse
             }
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
+            Initialize();
             clientSize = ClientSize;
             currentGameState = GameState.Game;
-            ClientSize = clientSize;
             Controls.Clear();
         }
 
@@ -86,8 +90,8 @@ namespace cat_and_mouse
             {
                 Map.DrawMap(e.Graphics);
                 e.Graphics.DrawImage(cheese, Map.CheesePosition.X * ElementSize, Map.CheesePosition.Y * ElementSize);
-                e.Graphics.DrawImage(Cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
-                e.Graphics.DrawImage(Mouse, MousePlayer.Position.X * ElementSize, MousePlayer.Position.Y * ElementSize);
+                e.Graphics.DrawImage(cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
+                e.Graphics.DrawImage(mouse, MousePlayer.Position.X * ElementSize, MousePlayer.Position.Y * ElementSize);
             }
 
             if (currentGameState == GameState.Pause)
@@ -98,8 +102,8 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.MapChoose)
             {
-                ClientSize = new Size(Menu.Width, Menu.Height);
-                e.Graphics.DrawImage(Menu, 0, 0);
+                ClientSize = new Size(menu.Width, menu.Height);
+                e.Graphics.DrawImage(menu, 0, 0);
                 var top = 550;
                 var left = 300;
 
@@ -121,8 +125,18 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.PlayerChoose)
             {
-                ClientSize = new Size(Menu.Width, Menu.Height);
-                e.Graphics.DrawImage(Menu, 0, 0);
+                ClientSize = new Size(menu.Width, menu.Height);
+                e.Graphics.DrawImage(menu, 0, 0);
+            }
+            if (currentGameState == GameState.CatWin)
+            {
+                ClientSize = new Size(catWin.Width, catWin.Height);
+                e.Graphics.DrawImage(catWin, 0, -100);
+            }
+            if (currentGameState == GameState.MouseWin)
+            {
+                ClientSize = new Size(mouseWin.Width, mouseWin.Height);
+                e.Graphics.DrawImage(mouseWin, 0, 0);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace cat_and_mouse.Domain
             if (CatPlayer.Position.X == MousePlayer.Position.X
                 && CatPlayer.Position.Y == MousePlayer.Position.Y)
             {
-                throw new Exception("Бе-бе-бе");
+                TypeOfGameForm.currentGameState = GameState.CatWin;
             }
         }
     }

@@ -20,7 +20,8 @@ namespace cat_and_mouse.Domain
             if (mousePlayer.Position.X == Map.CheesePosition.X
                 && mousePlayer.Position.Y == Map.CheesePosition.Y)
             {
-                throw new Exception("Эмм.... дальше пилить надо");
+               // throw new Exception("Эмм.... дальше пилить надо");
+                TypeOfGameForm.currentGameState = GameState.MouseWin;
                 //TypeOfGameForm.ActiveForm.Mes
             }
         }

@@ -12,7 +12,8 @@ namespace cat_and_mouse.Domain
         MapChoose,
         Game,
         Pause,
-        EndGame
+        CatWin,
+        MouseWin
     }
 
     public class Game
@@ -74,20 +75,6 @@ namespace cat_and_mouse.Domain
                 default:
                     throw new Exception("попытка зайти в паузу вне игры");
             }
-        }
-
-        public void EndGame()
-        {
-            if (curentLevelID == 0 && watch.ElapsedMilliseconds > 30000 ||
-                curentLevelID == 1 && watch.ElapsedMilliseconds > 60000 ||
-                curentLevelID == 2 && watch.ElapsedMilliseconds > 90000 || !Cat.Alive || !Mouse.Alive)
-            {
-                watch.Stop();
-                TotalTime = watch.ElapsedMilliseconds;
-                curentState = GameState.EndGame;
-            }
-            else
-                throw new Exception("Попытка закончить игру вне игры");
         }
 
         public void Restart()

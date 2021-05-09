@@ -7,7 +7,10 @@ namespace cat_and_mouse.Domain
     {
         private static bool isFirstLeft = true;
         private static bool isFirstRight = true;
-        private static bool realFirst = true;
+        private static bool realFirstCat = true;
+        private static bool isFirstA = true;
+        private static bool isFirstD = true;
+        private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
         
         public static void OnClick(Cat catPlayer, Image cat, Mouse mousePlayer, Image mouse, KeyEventArgs e, ref Size clientSize, int elementSize)
@@ -25,23 +28,23 @@ namespace cat_and_mouse.Domain
                 case Keys.A:
                     catPlayer.Move(-1, 0, catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
-                    isFirstRight = true;
-                    realFirst = false;
-                    if (isFirstLeft && !realFirst)
+                    isFirstD = true;
+                    realFirstCat = false;
+                    if (isFirstA && !realFirstCat)
                     {
                         cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstLeft = false;
+                        isFirstA = false;
                     }
                     break;
                 case Keys.D:
                     catPlayer.Move(1, 0, catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
-                    isFirstLeft = true;
-                    if (isFirstRight && !realFirst)
+                    isFirstA = true;
+                    if (isFirstD && !realFirstCat)
                     {
                         cat.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstRight = false;
-                        realFirst = false;
+                        isFirstD = false;
+                        realFirstCat = false;
                     }
                     break;
                 case Keys.Up:
@@ -59,24 +62,24 @@ namespace cat_and_mouse.Domain
                     mousePlayer.StateCheck(mousePlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     isFirstRight = true;
-                    realFirst = false;
-                    if (isFirstLeft && !realFirst)
+                    realFirstMouse = false;
+                    if (isFirstLeft && !realFirstMouse)
                     {
                         mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
                         isFirstLeft = false;
+                        realFirstMouse = false;
                     }
-                    realFirst = false;
                     break;
                 case Keys.Right:
                     mousePlayer.Move(1, 0, mousePlayer);
                     mousePlayer.StateCheck(mousePlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     isFirstLeft = true;
-                    if (isFirstRight && !realFirst)
+                    if (isFirstRight && !realFirstMouse)
                     {
                         mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
                         isFirstRight = false;
-                        realFirst = false;
+                        realFirstMouse = false;
                     }
                     break;
                 case Keys.Escape:
