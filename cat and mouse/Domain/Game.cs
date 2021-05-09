@@ -19,24 +19,12 @@ namespace cat_and_mouse.Domain
     public class Game
     {
         private Stopwatch watch = new Stopwatch();
-        public readonly List<Level> Levels;
         public long TotalTime;
         public GameState curentState { get; private set; } = GameState.PlayerChoose;
         private int curentLevelID;
         public Player Cat;
         public Player Mouse;
         
-        public Level CurentLevel
-        {
-            get { return Levels[curentLevelID]; }
-        }
-
-        public Game(List<string> levelNames)
-        {
-            Levels = new List<Level>();
-            //foreach (var name in levelNames)
-               // Levels.Add(new Level(name));
-        }
 
         public void PlayerChoose()
         {

@@ -35,7 +35,7 @@ namespace cat_and_mouse
 
         public TypeOfGameForm()
         {
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             DoubleBuffered = true;
             timer.Interval = 20;
@@ -141,15 +141,8 @@ namespace cat_and_mouse
                 StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(catWin, 0, -100);
                 Button restart = new Button();
-                restart.Left = 800;
-                restart.Top = 350;
-                restart.Text = "Restart";
-                Controls.Add(restart);
-                restart.Click += delegate
-                {
-                    currentGameState = GameState.MapChoose;
-                    Controls.Clear();
-                };
+                GameLogics.CreateRestartButton(restart, Controls);
+
             }
             if (currentGameState == GameState.MouseWin)
             {
@@ -157,15 +150,7 @@ namespace cat_and_mouse
                 StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(mouseWin, 0, 0);
                 Button restart = new Button();
-                restart.Left = 800;
-                restart.Top = 350;
-                restart.Text = "Restart";
-                Controls.Add(restart);
-                restart.Click += delegate
-                {
-                    currentGameState = GameState.MapChoose;
-                    Controls.Clear();
-                };
+                GameLogics.CreateRestartButton(restart, Controls);
             }
         }
     }
