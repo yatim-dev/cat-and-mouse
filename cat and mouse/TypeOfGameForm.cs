@@ -110,7 +110,7 @@ namespace cat_and_mouse
                 ClientSize = new Size(menu.Width, menu.Height);
                 StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(menu, 0, 0);
-                var top = 550;
+                var top = 540;
                 var left = 300;
 
                 for (var i = 0; i < 3; i++)
