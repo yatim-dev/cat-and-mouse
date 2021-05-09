@@ -80,16 +80,19 @@ namespace cat_and_mouse.Domain
                     }
                     break;
                 case Keys.Escape:
-                    if (isFirstEsc)
+                    if (TypeOfGameForm.currentGameState == GameState.Game || TypeOfGameForm.currentGameState == GameState.Pause)
                     {
-                        TypeOfGameForm.currentGameState = GameState.Pause;
-                        isFirstEsc = false;
-                    }
-                    else
-                    {
-                        TypeOfGameForm.currentGameState = GameState.Game;
-                        clientSize = new Size(Map.MapWidth * elementSize, Map.MapHeight * elementSize);
-                        isFirstEsc = true;
+                        if (isFirstEsc)
+                        {
+                            TypeOfGameForm.currentGameState = GameState.Pause;
+                            isFirstEsc = false;
+                        }
+                        else
+                        {
+                            TypeOfGameForm.currentGameState = GameState.Game;
+                            clientSize = new Size(Map.MapWidth * elementSize, Map.MapHeight * elementSize);
+                            isFirstEsc = true;
+                        }   
                     }
                     break;
             }    
