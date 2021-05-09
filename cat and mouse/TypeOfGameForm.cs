@@ -42,6 +42,7 @@ namespace cat_and_mouse
             timer.Tick += Update;
             MaximizeBox = false;
             clientSize = new Size(menu.Width, menu.Height);
+            StartPosition = FormStartPosition.CenterScreen;
             KeyDown += OnPress;
         }
 
@@ -49,6 +50,7 @@ namespace cat_and_mouse
         {
             Manipulator.OnClick(CatPlayer, cat, MousePlayer, mouse, e, ref clientSize, ElementSize);
             ClientSize = clientSize;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private static void LoadLevels()
@@ -78,8 +80,10 @@ namespace cat_and_mouse
             }
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
+            StartPosition = FormStartPosition.CenterScreen;
             Initialize();
             clientSize = ClientSize;
+            StartPosition = FormStartPosition.CenterScreen;
             currentGameState = GameState.Game;
             Controls.Clear();
         }
@@ -97,12 +101,14 @@ namespace cat_and_mouse
             if (currentGameState == GameState.Pause)
             {
                 ClientSize = new Size(Pause.Width, Pause.Height);
+                StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(Pause, 0, 0);
             }
 
             if (currentGameState == GameState.MapChoose)
             {
                 ClientSize = new Size(menu.Width, menu.Height);
+                StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(menu, 0, 0);
                 var top = 550;
                 var left = 300;
@@ -126,17 +132,40 @@ namespace cat_and_mouse
             if (currentGameState == GameState.PlayerChoose)
             {
                 ClientSize = new Size(menu.Width, menu.Height);
+                StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(menu, 0, 0);
             }
             if (currentGameState == GameState.CatWin)
             {
                 ClientSize = new Size(catWin.Width, catWin.Height);
+                StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(catWin, 0, -100);
+                Button restart = new Button();
+                restart.Left = 800;
+                restart.Top = 350;
+                restart.Text = "Restart";
+                Controls.Add(restart);
+                restart.Click += delegate
+                {
+                    currentGameState = GameState.MapChoose;
+                    Controls.Clear();
+                };
             }
             if (currentGameState == GameState.MouseWin)
             {
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
+                StartPosition = FormStartPosition.CenterScreen;
                 e.Graphics.DrawImage(mouseWin, 0, 0);
+                Button restart = new Button();
+                restart.Left = 800;
+                restart.Top = 350;
+                restart.Text = "Restart";
+                Controls.Add(restart);
+                restart.Click += delegate
+                {
+                    currentGameState = GameState.MapChoose;
+                    Controls.Clear();
+                };
             }
         }
     }
