@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
@@ -9,7 +10,7 @@ namespace cat_and_mouse
     public sealed partial class TypeOfGameForm : Form
     {
         private Timer timer = new();
-        public const int ElementSize = 40; //???
+        public const int ElementSize = 32; //???
 
         public static readonly string MainPath =
             new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.ToString();
@@ -21,14 +22,12 @@ namespace cat_and_mouse
 
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
         private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
-
-        private readonly Image cat = Image.FromFile(MainPath + @"\Pictures\cat.png");
-        private readonly Image mouse = Image.FromFile(MainPath + @"\Pictures\mouse.png");
-        private readonly Image cheese = Image.FromFile(MainPath + @"\Pictures\cheese.png");
-        private readonly Image catWin = Image.FromFile(MainPath + @"\Pictures\catWin.png");
-        private readonly Image mouseWin = Image.FromFile(MainPath + @"\Pictures\mouseWin.png");
-
+        private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
+        private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
         
+        private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
+        private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
+        private readonly Bitmap cheese = new(MainPath + @"\Pictures\cheese.png");
         
         private Size clientSize;
         private static string levelNumber;
@@ -90,9 +89,13 @@ namespace cat_and_mouse
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            
             if (currentGameState == GameState.Game)
             {
                 Map.DrawMap(e.Graphics);
+                cheese.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                cat.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                mouse.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(cheese, Map.CheesePosition.X * ElementSize, Map.CheesePosition.Y * ElementSize);
                 e.Graphics.DrawImage(cat, CatPlayer.Position.X * ElementSize, CatPlayer.Position.Y * ElementSize);
                 e.Graphics.DrawImage(mouse, MousePlayer.Position.X * ElementSize, MousePlayer.Position.Y * ElementSize);
@@ -102,6 +105,7 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(Pause.Width, Pause.Height);
                 StartPosition = FormStartPosition.CenterScreen;
+                Pause.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(Pause, 0, 0);
             }
 
@@ -109,6 +113,8 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(menu.Width, menu.Height);
                 StartPosition = FormStartPosition.CenterScreen;
+                e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
                 var top = 540;
                 var left = 300;
@@ -133,13 +139,15 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(menu.Width, menu.Height);
                 StartPosition = FormStartPosition.CenterScreen;
+                menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
             }
             if (currentGameState == GameState.CatWin)
             {
                 ClientSize = new Size(catWin.Width, catWin.Height);
                 StartPosition = FormStartPosition.CenterScreen;
-                e.Graphics.DrawImage(catWin, 0, -100);
+                catWin.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                e.Graphics.DrawImage(catWin, 0, 0);
                 Button restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);
 
@@ -148,6 +156,7 @@ namespace cat_and_mouse
             {
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
                 StartPosition = FormStartPosition.CenterScreen;
+                mouseWin.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(mouseWin, 0, 0);
                 Button restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);

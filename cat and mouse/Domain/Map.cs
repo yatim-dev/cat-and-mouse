@@ -48,15 +48,22 @@ namespace cat_and_mouse.Domain
 
         public static void DrawMap(Graphics e)
         {
-            var wall = Image.FromFile(TypeOfGameForm.MainPath + @"\Pictures\wall.png");
-            var empty = Image.FromFile(TypeOfGameForm.MainPath + @"\Pictures\empty.png");
+            var wall = new Bitmap(TypeOfGameForm.MainPath + @"\Pictures\wall.png");
+            var empty = new Bitmap(TypeOfGameForm.MainPath + @"\Pictures\empty.png");
             for (var i = 0; i < MapWidth; i++)
             for (var j = 0; j < MapHeight; j++)
             {
                 if (MapArray[i, j] == MapCell.Wall)
-                    e.DrawImage(wall, (i) * TypeOfGameForm.ElementSize, (j) * TypeOfGameForm.ElementSize);
+                {
+                    wall.SetResolution(e.DpiX, e.DpiY);
+                    e.DrawImage(wall, i * TypeOfGameForm.ElementSize, j * TypeOfGameForm.ElementSize);
+                }
+
                 if (MapArray[i, j] == MapCell.Empty)
-                    e.DrawImage(empty, (i) * TypeOfGameForm.ElementSize, (j) * TypeOfGameForm.ElementSize);
+                {
+                    empty.SetResolution(e.DpiX, e.DpiY);
+                    e.DrawImage(empty, i * TypeOfGameForm.ElementSize, j * TypeOfGameForm.ElementSize);
+                }
             }
         }
     }
