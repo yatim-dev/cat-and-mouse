@@ -10,7 +10,7 @@ namespace cat_and_mouse
     public sealed partial class TypeOfGameForm : Form
     {
         private Timer timer = new();
-        public const int ElementSize = 32; //???
+        public const int ElementSize = 32;
 
         public static readonly string MainPath =
             new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.ToString();
