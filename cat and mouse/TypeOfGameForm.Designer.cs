@@ -1,4 +1,6 @@
-﻿namespace cat_and_mouse
+﻿using System.Windows.Forms;
+
+namespace cat_and_mouse
 {
     sealed partial class TypeOfGameForm
     {
@@ -31,8 +33,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1080, 720);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.WindowState = FormWindowState.Normal;
             this.Text = "cat and mouse";
+            
         }
 
         #endregion

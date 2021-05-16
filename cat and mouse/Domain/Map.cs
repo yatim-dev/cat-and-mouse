@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain

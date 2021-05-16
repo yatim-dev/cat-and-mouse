@@ -34,7 +34,6 @@ namespace cat_and_mouse
 
         public TypeOfGameForm()
         {
-            StartPosition = StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             DoubleBuffered = true;
             timer.Interval = 20;
@@ -42,6 +41,7 @@ namespace cat_and_mouse
             MaximizeBox = false;
             clientSize = new Size(menu.Width, menu.Height);
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
         }
 
@@ -50,6 +50,7 @@ namespace cat_and_mouse
             Manipulator.OnClick(CatPlayer, cat, MousePlayer, mouse, e, ref clientSize, ElementSize);
             ClientSize = clientSize;
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Normal;
         }
 
         private static void LoadLevels()
@@ -80,9 +81,11 @@ namespace cat_and_mouse
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Normal;
             Initialize();
             clientSize = ClientSize;
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Normal;
             currentGameState = GameState.Game;
             Controls.Clear();
         }
@@ -93,6 +96,8 @@ namespace cat_and_mouse
             if (currentGameState == GameState.Game)
             {
                 Map.DrawMap(e.Graphics);
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 cheese.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 cat.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 mouse.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
@@ -104,7 +109,8 @@ namespace cat_and_mouse
             if (currentGameState == GameState.Pause)
             {
                 ClientSize = new Size(Pause.Width, Pause.Height);
-                StartPosition = FormStartPosition.CenterScreen;
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 Pause.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(Pause, 0, 0);
             }
@@ -112,7 +118,8 @@ namespace cat_and_mouse
             if (currentGameState == GameState.MapChoose)
             {
                 ClientSize = new Size(menu.Width, menu.Height);
-                StartPosition = FormStartPosition.CenterScreen;
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                 menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
@@ -138,14 +145,16 @@ namespace cat_and_mouse
             if (currentGameState == GameState.PlayerChoose)
             {
                 ClientSize = new Size(menu.Width, menu.Height);
-                StartPosition = FormStartPosition.CenterScreen;
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
             }
             if (currentGameState == GameState.CatWin)
             {
                 ClientSize = new Size(catWin.Width, catWin.Height);
-                StartPosition = FormStartPosition.CenterScreen;
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 catWin.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(catWin, 0, 0);
                 Button restart = new Button();
@@ -155,7 +164,8 @@ namespace cat_and_mouse
             if (currentGameState == GameState.MouseWin)
             {
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
-                StartPosition = FormStartPosition.CenterScreen;
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 mouseWin.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(mouseWin, 0, 0);
                 Button restart = new Button();
