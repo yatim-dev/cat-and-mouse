@@ -2,8 +2,10 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
+using Timer = System.Windows.Forms.Timer;
 
 namespace cat_and_mouse
 {
@@ -43,6 +45,7 @@ namespace cat_and_mouse
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
+            //KeyUp
         }
 
         public void OnPress(object sender, KeyEventArgs e)
