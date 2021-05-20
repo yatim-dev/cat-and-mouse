@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
 using Timer = System.Windows.Forms.Timer;
@@ -78,10 +79,14 @@ namespace cat_and_mouse
                     MousePlayer.deltaX = 0;  
                     break;
             }
+            Debug.Print("{0}", "+++++++++++++++++++++++++++++++++++++++++++++++");
+
             Debug.Print("CatStop {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
             //Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
             Debug.Print("MouseStop {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
             //Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+            Debug.Print("{0}", "=====================================================");
+
 
 
         }
@@ -89,13 +94,20 @@ namespace cat_and_mouse
         public void OnPress(object sender, KeyEventArgs e)
         {
             Manipulator.OnClick(CatPlayer, cat, MousePlayer, mouse, e, ref clientSize, ElementSize);
+            new Task(() => Manipulator.CatMove(CatPlayer, cat, MousePlayer, e), TaskCreationOptions.LongRunning).Start();
+            new Task(() => Manipulator.MouseMove(CatPlayer, MousePlayer, mouse, e), TaskCreationOptions.LongRunning).Start();
             ClientSize = clientSize;
-            StartPosition = FormStartPosition.CenterScreen;
-            WindowState = FormWindowState.Normal;
+            CatPlayer.Position.X += CatPlayer.deltaX;
+            CatPlayer.Position.Y += CatPlayer.deltaY;
+            MousePlayer.Position.X += MousePlayer.deltaX;
+            MousePlayer.Position.Y += MousePlayer.deltaY;
+
+            Debug.Print("{0}", "-----------------------------------------------");
             Debug.Print("CatGo {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
             //Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
             Debug.Print("MouseGo {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
             //Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+            Debug.Print("{0}", "**************************************************");
 
 
         }
