@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -77,6 +78,12 @@ namespace cat_and_mouse
                     MousePlayer.deltaX = 0;  
                     break;
             }
+            Debug.Print("CatStop {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
+            Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
+            Debug.Print("MouseStop {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
+            Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+
+
         }
 
         public void OnPress(object sender, KeyEventArgs e)
@@ -85,6 +92,12 @@ namespace cat_and_mouse
             ClientSize = clientSize;
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Normal;
+            Debug.Print("CatGo {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
+            Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
+            Debug.Print("MouseGo {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
+            Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+
+
         }
 
         private static void LoadLevels()

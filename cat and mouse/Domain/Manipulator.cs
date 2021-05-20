@@ -19,6 +19,10 @@ namespace cat_and_mouse.Domain
         {
             new Task(() => CatMove(catPlayer, cat, mousePlayer, e), TaskCreationOptions.LongRunning).Start();
             new Task(() => MouseMove(catPlayer, mousePlayer, mouse, e), TaskCreationOptions.LongRunning).Start();
+            
+           
+
+            
 
             switch (e.KeyCode)
             {
@@ -49,18 +53,18 @@ namespace cat_and_mouse.Domain
             {
                 case Keys.W:
                     catPlayer.deltaY = -1;
-                    catPlayer.Move(catPlayer);
-                    catPlayer.StateCheck(catPlayer, mousePlayer);
+                    new Task(() => catPlayer.Move(catPlayer), TaskCreationOptions.LongRunning).Start();
+                    new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.S:
                     catPlayer.deltaY = 1;
-                    catPlayer.Move(catPlayer);
-                    catPlayer.StateCheck(catPlayer, mousePlayer);
+                    new Task(() => catPlayer.Move(catPlayer), TaskCreationOptions.LongRunning).Start();
+                    new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.A:
                     catPlayer.deltaX = -1;
-                    catPlayer.Move(catPlayer);
-                    catPlayer.StateCheck(catPlayer, mousePlayer);
+                    new Task(() => catPlayer.Move(catPlayer), TaskCreationOptions.LongRunning).Start();
+                    new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstD = true;
                     realFirstCat = false;
                     if (isFirstA && !realFirstCat)
@@ -72,8 +76,8 @@ namespace cat_and_mouse.Domain
                     break;
                 case Keys.D:
                     catPlayer.deltaX = 1;
-                    catPlayer.Move(catPlayer);
-                    catPlayer.StateCheck(catPlayer, mousePlayer);
+                    new Task(() => catPlayer.Move(catPlayer), TaskCreationOptions.LongRunning).Start();
+                    new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
                     {
@@ -92,21 +96,21 @@ namespace cat_and_mouse.Domain
                 {
                     case Keys.Up:
                         mousePlayer.deltaY = -1;
-                        mousePlayer.Move(mousePlayer);
-                        mousePlayer.StateCheck(mousePlayer);
-                        catPlayer.StateCheck(catPlayer, mousePlayer);
+                        new Task(() => mousePlayer.Move(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                         break;
                     case Keys.Down:
                         mousePlayer.deltaY = 1;
-                        mousePlayer.Move(mousePlayer);
-                        mousePlayer.StateCheck(mousePlayer);
-                        catPlayer.StateCheck(catPlayer, mousePlayer);
+                        new Task(() => mousePlayer.Move(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                         break;
                     case Keys.Left:
                         mousePlayer.deltaX = -1;
-                        mousePlayer.Move(mousePlayer);
-                        mousePlayer.StateCheck(mousePlayer);
-                        catPlayer.StateCheck(catPlayer, mousePlayer);
+                        new Task(() => mousePlayer.Move(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                         isFirstRight = true;
                         realFirstMouse = false;
                         if (isFirstLeft && !realFirstMouse)
@@ -120,8 +124,9 @@ namespace cat_and_mouse.Domain
                     case Keys.Right:
                         mousePlayer.deltaX = 1;
                         mousePlayer.Move(mousePlayer);
-                        mousePlayer.StateCheck(mousePlayer);
-                        catPlayer.StateCheck(catPlayer, mousePlayer);
+                        new Task(() => mousePlayer.Move(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
+                        new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                         isFirstLeft = true;
                         if (isFirstRight && !realFirstMouse)
                         {
