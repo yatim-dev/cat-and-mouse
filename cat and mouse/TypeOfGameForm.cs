@@ -79,9 +79,9 @@ namespace cat_and_mouse
                     break;
             }
             Debug.Print("CatStop {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
-            Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
+            //Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
             Debug.Print("MouseStop {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
-            Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+            //Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
 
 
         }
@@ -93,9 +93,9 @@ namespace cat_and_mouse
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Normal;
             Debug.Print("CatGo {0}, {1}", CatPlayer.deltaX, CatPlayer.deltaY);
-            Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
+            //Debug.Print("CatPosition {0}, {1}", CatPlayer.Position.X, CatPlayer.Position.Y);
             Debug.Print("MouseGo {0}, {1}", MousePlayer.deltaX, MousePlayer.deltaY);
-            Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
+            //Debug.Print("MousePosition {0}, {1}", MousePlayer.Position.X, MousePlayer.Position.Y);
 
 
         }
