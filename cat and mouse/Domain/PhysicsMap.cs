@@ -6,16 +6,15 @@ namespace cat_and_mouse.Domain
 {
     public class PhysicsMap
     {
-        public static (int deltaX, int deltaY) IsCollide(Character character, (int deltaX, int deltaY) deltaPosition)
+        public static void IsCollide(Character character)
         {
-            if (Map.MapArray[character.Position.X + deltaPosition.deltaX, character.Position.Y + deltaPosition.deltaY] == MapCell.Wall)
+            if (character.Position.X + character.deltaX >= Map.MapWidth
+                || character.Position.Y + character.deltaY >= Map.MapHeight
+                || Map.MapArray[character.Position.X + character.deltaX, character.Position.Y + character.deltaY] == MapCell.Wall)
             {
-                deltaPosition.deltaX = 0;
-                deltaPosition.deltaY = 0;
+                character.deltaX = 0;
+                character.deltaY = 0;
             }
-            
-
-            return deltaPosition;
         }
     }
 }

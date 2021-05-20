@@ -13,12 +13,5 @@ namespace cat_and_mouse.Domain
             Position.X = x;
             Position.Y = y;
         }
-
-        public void Move(Character character)
-        {
-            (deltaX, deltaY) = PhysicsMap.IsCollide(character, (deltaX, deltaY));
-            Position.X += deltaX;
-            Position.Y += deltaY;
-        }
     }
 }
