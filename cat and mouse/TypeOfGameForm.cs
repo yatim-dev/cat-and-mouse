@@ -45,7 +45,38 @@ namespace cat_and_mouse
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
-            //KeyUp
+            KeyUp += OnKeyUp;
+        }
+
+        public void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    CatPlayer.deltaY = 0;
+                    break;
+                case Keys.S:
+                    CatPlayer.deltaY = 0;  
+                    break;
+                case Keys.A:
+                    CatPlayer.deltaX = 0;  
+                    break;
+                case Keys.D:
+                    CatPlayer.deltaX = 0;  
+                    break;
+                case Keys.Up:
+                    MousePlayer.deltaY = 0;
+                    break;
+                case Keys.Down:
+                    MousePlayer.deltaY = 0;  
+                    break;
+                case Keys.Left:
+                    MousePlayer.deltaX = 0;  
+                    break;
+                case Keys.Right:
+                    MousePlayer.deltaX = 0;  
+                    break;
+            }
         }
 
         public void OnPress(object sender, KeyEventArgs e)

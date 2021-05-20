@@ -19,9 +19,7 @@ namespace cat_and_mouse.Domain
         {
             new Task(() => CatMove(catPlayer, cat, mousePlayer, e), TaskCreationOptions.LongRunning).Start();
             new Task(() => MouseMove(catPlayer, mousePlayer, mouse, e), TaskCreationOptions.LongRunning).Start();
-            //MouseMove(catPlayer, mousePlayer, mouse, e);
-            //CatMove(catPlayer, cat, mousePlayer, e);
-           // KeyInfo
+
             switch (e.KeyCode)
             {
                 case Keys.Escape:
@@ -50,15 +48,18 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    catPlayer.Move(0, -1, catPlayer);
+                    catPlayer.deltaY = -1;
+                    catPlayer.Move(catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     break;
                 case Keys.S:
-                    catPlayer.Move(0, 1, catPlayer);
+                    catPlayer.deltaY = 1;
+                    catPlayer.Move(catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     break;
                 case Keys.A:
-                    catPlayer.Move(-1, 0, catPlayer);
+                    catPlayer.deltaX = -1;
+                    catPlayer.Move(catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     isFirstD = true;
                     realFirstCat = false;
@@ -70,7 +71,8 @@ namespace cat_and_mouse.Domain
 
                     break;
                 case Keys.D:
-                    catPlayer.Move(1, 0, catPlayer);
+                    catPlayer.deltaX = 1;
+                    catPlayer.Move(catPlayer);
                     catPlayer.StateCheck(catPlayer, mousePlayer);
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
@@ -89,17 +91,20 @@ namespace cat_and_mouse.Domain
                 switch (e.KeyCode)
                 {
                     case Keys.Up:
-                        mousePlayer.Move(0, -1, mousePlayer);
+                        mousePlayer.deltaY = -1;
+                        mousePlayer.Move(mousePlayer);
                         mousePlayer.StateCheck(mousePlayer);
                         catPlayer.StateCheck(catPlayer, mousePlayer);
                         break;
                     case Keys.Down:
-                        mousePlayer.Move(0, 1, mousePlayer);
+                        mousePlayer.deltaY = 1;
+                        mousePlayer.Move(mousePlayer);
                         mousePlayer.StateCheck(mousePlayer);
                         catPlayer.StateCheck(catPlayer, mousePlayer);
                         break;
                     case Keys.Left:
-                        mousePlayer.Move(-1, 0, mousePlayer);
+                        mousePlayer.deltaX = -1;
+                        mousePlayer.Move(mousePlayer);
                         mousePlayer.StateCheck(mousePlayer);
                         catPlayer.StateCheck(catPlayer, mousePlayer);
                         isFirstRight = true;
@@ -113,7 +118,8 @@ namespace cat_and_mouse.Domain
 
                         break;
                     case Keys.Right:
-                        mousePlayer.Move(1, 0, mousePlayer);
+                        mousePlayer.deltaX = 1;
+                        mousePlayer.Move(mousePlayer);
                         mousePlayer.StateCheck(mousePlayer);
                         catPlayer.StateCheck(catPlayer, mousePlayer);
                         isFirstLeft = true;

@@ -6,20 +6,19 @@ namespace cat_and_mouse.Domain
     public class Character
     {
         public Point Position;
-        public bool Alive = true;
-        
+        public int deltaX;
+        public int deltaY;
         public Character(int x, int y)
         {
             Position.X = x;
             Position.Y = y;
         }
 
-        public void Move(int deltaX, int deltaY, Character character)
+        public void Move(Character character)
         {
-            var deltaPosition = (deltaX, deltaY);
-            deltaPosition = PhysicsMap.IsCollide(character, deltaPosition);
-            Position.X += deltaPosition.deltaX;
-            Position.Y += deltaPosition.deltaY;
+            (deltaX, deltaY) = PhysicsMap.IsCollide(character, (deltaX, deltaY));
+            Position.X += deltaX;
+            Position.Y += deltaY;
         }
     }
 }
