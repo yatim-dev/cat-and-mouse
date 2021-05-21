@@ -10,7 +10,7 @@ namespace cat_and_mouse.Domain
         {
         }
 
-        public void StateCheck(Character mousePlayer)
+        public static void StateCheck(Character mousePlayer)
         {
             if (mousePlayer.Position.X == Map.CheesePosition.X && mousePlayer.Position.Y == Map.CheesePosition.Y)
                 TypeOfGameForm.currentGameState = GameState.MouseWin;

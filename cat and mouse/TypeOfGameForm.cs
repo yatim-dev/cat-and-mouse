@@ -99,6 +99,8 @@ namespace cat_and_mouse
             CatPlayer.Position.Y += CatPlayer.deltaY;
             MousePlayer.Position.X += MousePlayer.deltaX;
             MousePlayer.Position.Y += MousePlayer.deltaY;
+            Cat.StateCheck(CatPlayer, MousePlayer);
+            Mouse.StateCheck(MousePlayer);
 
         }
 
@@ -199,6 +201,7 @@ namespace cat_and_mouse
                 menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
             }
+
             if (currentGameState == GameState.CatWin)
             {
                 ClientSize = new Size(catWin.Width, catWin.Height);

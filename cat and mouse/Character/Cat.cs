@@ -12,7 +12,7 @@ namespace cat_and_mouse.Domain
         {
         }
 
-        public void StateCheck(Character CatPlayer, Character MousePlayer)
+        public static void StateCheck(Character CatPlayer, Character MousePlayer)
         {
             if (CatPlayer.Position.X == MousePlayer.Position.X
                 && CatPlayer.Position.Y == MousePlayer.Position.Y)
