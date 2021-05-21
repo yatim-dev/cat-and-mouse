@@ -40,21 +40,18 @@ namespace cat_and_mouse.Domain
             }
         }
 
-        public static void CatMove(Cat catPlayer, Image cat, Mouse mousePlayer, KeyEventArgs e)
+        public static void CatMove(Cat catPlayer, Image cat, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.W:
                     catPlayer.deltaY = -1;
-                    //new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.S:
                     catPlayer.deltaY = 1;
-                    //new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.A:
                     catPlayer.deltaX = -1;
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstD = true;
                     realFirstCat = false;
                     if (isFirstA && !realFirstCat)
@@ -66,7 +63,6 @@ namespace cat_and_mouse.Domain
                     break;
                 case Keys.D:
                     catPlayer.deltaX = 1;
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
                     {
@@ -79,24 +75,18 @@ namespace cat_and_mouse.Domain
             }
         }
 
-        public static void MouseMove(Cat catPlayer, Mouse mousePlayer, Image mouse, KeyEventArgs e)
+        public static void MouseMove(Mouse mousePlayer, Image mouse, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.Up:
                     mousePlayer.deltaY = -1;
-                    // new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.Down:
                     mousePlayer.deltaY = 1;
-                    // new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     break;
                 case Keys.Left:
                     mousePlayer.deltaX = -1;
-                    // new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstRight = true;
                     realFirstMouse = false;
                     if (isFirstLeft && !realFirstMouse)
@@ -109,8 +99,6 @@ namespace cat_and_mouse.Domain
                     break;
                 case Keys.Right:
                     mousePlayer.deltaX = 1;
-                    // new Task(() => mousePlayer.StateCheck(mousePlayer), TaskCreationOptions.LongRunning).Start();
-                    // new Task(() => catPlayer.StateCheck(catPlayer, mousePlayer), TaskCreationOptions.LongRunning).Start();
                     isFirstLeft = true;
                     if (isFirstRight && !realFirstMouse)
                     {
@@ -121,6 +109,45 @@ namespace cat_and_mouse.Domain
 
                     break;
             }
+        }
+
+        public static void KeyUp(KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    TypeOfGameForm.CatPlayer.deltaY = 0;
+                    break;
+                case Keys.S:
+                    TypeOfGameForm.CatPlayer.deltaY = 0;
+                    break;
+                case Keys.A:
+                    TypeOfGameForm.CatPlayer.deltaX = 0;
+                    break;
+                case Keys.D:
+                    TypeOfGameForm.CatPlayer.deltaX = 0;
+                    break;
+                case Keys.Up:
+                    TypeOfGameForm.MousePlayer.deltaY = 0;
+                    break;
+                case Keys.Down:
+                    TypeOfGameForm.MousePlayer.deltaY = 0;
+                    break;
+                case Keys.Left:
+                    TypeOfGameForm.MousePlayer.deltaX = 0;
+                    break;
+                case Keys.Right:
+                    TypeOfGameForm.MousePlayer.deltaX = 0;
+                    break;
+            }
+        }
+
+        public static void ChangePosition()
+        {
+            TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.deltaX;
+            TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.deltaY;
+            TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
+            TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
         }
     }
 }

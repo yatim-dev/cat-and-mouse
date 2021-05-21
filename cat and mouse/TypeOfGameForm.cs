@@ -19,8 +19,8 @@ namespace cat_and_mouse
         public static readonly string MainPath =
             new DirectoryInfo(Directory.GetCurrentDirectory()).Parent?.Parent?.Parent?.ToString();
 
-        public Cat CatPlayer;
-        public Mouse MousePlayer;
+        public static Cat CatPlayer;
+        public static Mouse MousePlayer;
 
         public static GameState currentGameState = GameState.MapChoose;
 
@@ -28,11 +28,11 @@ namespace cat_and_mouse
         private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
         private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
         private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
-        
+
         private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
         private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
         private readonly Bitmap cheese = new(MainPath + @"\Pictures\cheese.png");
-        
+
         private Size clientSize;
         private static string levelNumber;
 
@@ -52,56 +52,24 @@ namespace cat_and_mouse
 
         public void OnKeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.W:
-                    CatPlayer.deltaY = 0;
-                    break;
-                case Keys.S:
-                    CatPlayer.deltaY = 0;  
-                    break;
-                case Keys.A:
-                    CatPlayer.deltaX = 0;  
-                    break;
-                case Keys.D:
-                    CatPlayer.deltaX = 0;  
-                    break;
-                case Keys.Up:
-                    MousePlayer.deltaY = 0;
-                    break;
-                case Keys.Down:
-                    MousePlayer.deltaY = 0;  
-                    break;
-                case Keys.Left:
-                    MousePlayer.deltaX = 0;  
-                    break;
-                case Keys.Right:
-                    MousePlayer.deltaX = 0;  
-                    break;
-            }
-           
-
-
-
+            if (currentGameState == GameState.Game)
+                Manipulator.KeyUp(e);
         }
 
         public void OnPress(object sender, KeyEventArgs e)
         {
-            Manipulator.OnClick(e, ref clientSize, ElementSize);
-            //new Task(() => Manipulator.CatMove(CatPlayer, cat, MousePlayer, e), TaskCreationOptions.LongRunning).Start();
-            //new Task(() => Manipulator.MouseMove(CatPlayer, MousePlayer, mouse, e), TaskCreationOptions.LongRunning).Start();
-            Manipulator.CatMove(CatPlayer, cat, MousePlayer, e);
-            Manipulator.MouseMove(CatPlayer, MousePlayer, mouse, e);
-            PhysicsMap.IsCollide(CatPlayer);
-            PhysicsMap.IsCollide(MousePlayer);
-            ClientSize = clientSize;
-            CatPlayer.Position.X += CatPlayer.deltaX;
-            CatPlayer.Position.Y += CatPlayer.deltaY;
-            MousePlayer.Position.X += MousePlayer.deltaX;
-            MousePlayer.Position.Y += MousePlayer.deltaY;
-            Cat.StateCheck(CatPlayer, MousePlayer);
-            Mouse.StateCheck(MousePlayer);
-
+            if (currentGameState == GameState.Game)
+            {
+                Manipulator.OnClick(e, ref clientSize, ElementSize);
+                Manipulator.CatMove(CatPlayer, cat, e);
+                Manipulator.MouseMove(MousePlayer, mouse, e);
+                PhysicsMap.IsCollide(CatPlayer);
+                PhysicsMap.IsCollide(MousePlayer);
+                ClientSize = clientSize;
+                Manipulator.ChangePosition();
+                Cat.StateCheck(CatPlayer, MousePlayer);
+                Mouse.StateCheck(MousePlayer);
+            }
         }
 
         private static void LoadLevels()
@@ -122,13 +90,14 @@ namespace cat_and_mouse
         {
             Invalidate();
         }
-        
+
         private void ButtonOnClick(object sender, EventArgs eventArgs)
         {
             if (sender is Button button)
             {
                 levelNumber = button.Name.Substring(5);
             }
+
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
             StartPosition = FormStartPosition.CenterScreen;
@@ -143,7 +112,6 @@ namespace cat_and_mouse
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            
             if (currentGameState == GameState.Game)
             {
                 Map.DrawMap(e.Graphics);
@@ -211,8 +179,8 @@ namespace cat_and_mouse
                 e.Graphics.DrawImage(catWin, 0, 0);
                 Button restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);
-
             }
+
             if (currentGameState == GameState.MouseWin)
             {
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
