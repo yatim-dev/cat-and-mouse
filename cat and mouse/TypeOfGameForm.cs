@@ -3,9 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
 using Timer = System.Windows.Forms.Timer;
@@ -65,23 +62,20 @@ namespace cat_and_mouse
         {
             if (currentGameState == GameState.Game)
             {
+                Manipulator.CatMove(CatPlayer, cat, e);
+                PhysicsMap.IsCollide(CatPlayer);
                 Manipulator.OnClick(e, ref clientSize, ElementSize);
                 if (currentPlayerState == PlayerState.MouseBot)
                 {
-                    //MousePlayer.Position = Manipulator.mouseWay.First();
                     Manipulator.mouseWay?.RemoveAt(0);
-                    Manipulator.ChangePosition();
-
                 }
                 else
                 {
                     Manipulator.MouseMove(MousePlayer, mouse, e);
+                    PhysicsMap.IsCollide(MousePlayer);
                 }
-                Manipulator.CatMove(CatPlayer, cat, e);
-                PhysicsMap.IsCollide(CatPlayer);
-                PhysicsMap.IsCollide(MousePlayer);
-                ClientSize = clientSize;
                 Manipulator.ChangePosition();
+                ClientSize = clientSize;
                 Cat.StateCheck(CatPlayer, MousePlayer);
                 Mouse.StateCheck(MousePlayer);
             }
@@ -98,6 +92,11 @@ namespace cat_and_mouse
         {
             CatPlayer = new Cat(Map.CatPosition.X, Map.CatPosition.Y);
             MousePlayer = new Mouse(Map.MousePosition.X, Map.MousePosition.Y);
+            if (isFirstPress)
+            {
+                isFirstPress = false;
+                Manipulator.MouseDown(MousePlayer);
+            } 
             timer.Start();
         }
 
@@ -151,6 +150,7 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.MapChoose)
             {
+                isFirstPress = true;
                 ClientSize = new Size(menu.Width, menu.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
@@ -187,6 +187,8 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.CatWin)
             {
+                isFirstPress = true;
+                Manipulator.mouseWay.Clear();
                 ClientSize = new Size(catWin.Width, catWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
@@ -198,6 +200,8 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.MouseWin)
             {
+                isFirstPress = true;
+                Manipulator.mouseWay.Clear();
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
@@ -205,15 +209,6 @@ namespace cat_and_mouse
                 e.Graphics.DrawImage(mouseWin, 0, 0);
                 Button restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);
-            }
-        }
-        
-        protected override void OnMouseDown(MouseEventArgs mouseEventArgs)
-        {
-            if (isFirstPress)
-            {
-                isFirstPress = false;
-                Manipulator.MouseDown(MousePlayer);
             }
         }
     }

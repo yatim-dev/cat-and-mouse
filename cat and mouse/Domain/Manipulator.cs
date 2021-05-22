@@ -19,7 +19,7 @@ namespace cat_and_mouse.Domain
         private static bool mouseBot = true;
 
         private static IEnumerable<List<Point>> pathsToCheese;
-        public static List<Point> mouseWay = new List<Point>();
+        public static List<Point> mouseWay = new();
 
         public static void OnClick(KeyEventArgs e,
             ref Size clientSize, int elementSize)
@@ -53,18 +53,12 @@ namespace cat_and_mouse.Domain
             {
                 case Keys.W:
                     catPlayer.deltaY = -1;
-                    //PhysicsMap.IsCollide(catPlayer);
-                    //catPlayer.deltaY = -1;
                     break;
                 case Keys.S:
                     catPlayer.deltaY = 1;
-                    //PhysicsMap.IsCollide(catPlayer);
-                    //catPlayer.deltaY = 1;
                     break;
                 case Keys.A:
                     catPlayer.deltaX = -1;
-                    //PhysicsMap.IsCollide(catPlayer);
-                    //catPlayer.deltaX = -1;
                     isFirstD = true;
                     realFirstCat = false;
                     if (isFirstA && !realFirstCat)
@@ -76,8 +70,6 @@ namespace cat_and_mouse.Domain
                     break;
                 case Keys.D:
                     catPlayer.deltaX = 1;
-                    //PhysicsMap.IsCollide(catPlayer);
-                    //catPlayer.deltaX = 1;
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
                     {
@@ -178,11 +170,11 @@ namespace cat_and_mouse.Domain
         
         public static void MouseDown(Character character)
         {
-            var lastMouseClick = new Point(character.Position.X, character.Position.Y);
+            var LastCharacterPosition = new Point(character.Position.X, character.Position.Y);
             Point[] cheesePos = {Map.CheesePosition};
-            if (Map.MapArray[lastMouseClick.X, lastMouseClick.Y] == MapCell.Empty)
+            if (Map.MapArray[LastCharacterPosition.X, LastCharacterPosition.Y] == MapCell.Empty)
             {
-                pathsToCheese = BfsTask.FindPaths(lastMouseClick, cheesePos)
+                pathsToCheese = BfsTask.FindPaths(LastCharacterPosition, cheesePos)
                     .Select(x => x.ToList()).ToList();
                 foreach (var pathsToChest in pathsToCheese)
                     pathsToChest.Reverse();
