@@ -21,9 +21,8 @@ namespace cat_and_mouse
         public static Mouse MousePlayer;
 
         public static GameState currentGameState = GameState.MapChoose;
-        public static PlayerState currentPlayerState = PlayerState.MouseBot; /// <summary>
-                                                                             /// //////////////
-                                                                             /// </summary>
+        public static PlayerState currentPlayerState = PlayerState.NoBot; 
+                                                                             
         private bool isFirstPress = true;
 
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
