@@ -16,8 +16,10 @@ namespace cat_and_mouse.Domain
         private static bool isFirstD = true;
         private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
-        
-        public static IEnumerable<List<Point>> pathsToChests;
+        private static bool mouseBot = true;
+
+        private static IEnumerable<List<Point>> pathsToCheese;
+        public static List<Point> mouseWay;
 
         public static void OnClick(KeyEventArgs e,
             ref Size clientSize, int elementSize)
@@ -91,37 +93,39 @@ namespace cat_and_mouse.Domain
         public static void MouseMove(Mouse mousePlayer, Image mouse, KeyEventArgs e)
         {
             switch (e.KeyCode)
-            {
-                case Keys.Up:
-                    mousePlayer.deltaY = -1;
-                    break;
-                case Keys.Down:
-                    mousePlayer.deltaY = 1;
-                    break;
-                case Keys.Left:
-                    mousePlayer.deltaX = -1;
-                    isFirstRight = true;
-                    realFirstMouse = false;
-                    if (isFirstLeft && !realFirstMouse)
-                    {
-                        mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstLeft = false;
+                {
+                    case Keys.Up:
+                        mousePlayer.deltaY = -1;
+                        break;
+                    case Keys.Down:
+                        mousePlayer.deltaY = 1;
+                        break;
+                    case Keys.Left:
+                        mousePlayer.deltaX = -1;
+                        isFirstRight = true;
                         realFirstMouse = false;
-                    }
+                        if (isFirstLeft && !realFirstMouse)
+                        {
+                            mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
+                            isFirstLeft = false;
+                            realFirstMouse = false;
+                        }
 
-                    break;
-                case Keys.Right:
-                    mousePlayer.deltaX = 1;
-                    isFirstLeft = true;
-                    if (isFirstRight && !realFirstMouse)
-                    {
-                        mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
-                        isFirstRight = false;
-                        realFirstMouse = false;
-                    }
+                        break;
+                    case Keys.Right:
+                        mousePlayer.deltaX = 1;
+                        isFirstLeft = true;
+                        if (isFirstRight && !realFirstMouse)
+                        {
+                            mouse.RotateFlip(RotateFlipType.Rotate180FlipY);
+                            isFirstRight = false;
+                            realFirstMouse = false;
+                        }
 
-                    break;
-            }
+                        break;
+                }
+            
+
         }
 
         public static void KeyUp(KeyEventArgs e)
@@ -169,19 +173,21 @@ namespace cat_and_mouse.Domain
             Point[] cheesePos = {Map.CheesePosition};
             if (Map.MapArray[lastMouseClick.X, lastMouseClick.Y] == MapCell.Empty)
             {
-                pathsToChests = BfsTask.FindPaths(lastMouseClick, cheesePos)
+                pathsToCheese = BfsTask.FindPaths(lastMouseClick, cheesePos)
                     .Select(x => x.ToList()).ToList();
-                foreach (var pathsToChest in pathsToChests)
+                foreach (var pathsToChest in pathsToCheese)
                     pathsToChest.Reverse();
             }
-            MouseGo(character);
+
+            var cheesePaths = pathsToCheese.ToArray();
+            foreach (var t in cheesePaths)
+                for (var j = 0; j < cheesePaths[0].Count; j++)
+                    mouseWay.Add(t[j]);
         }
 
         public static void MouseGo(Character character)
         {
-            IEnumerable<List<Point>> a = new List<List<Point>>();
-            a = pathsToChests;
-            var points = a.ToArray();
+            var points = pathsToCheese.ToArray();
             for (int i = 0; i < points.Length; i++)
             {
                 for (int j = 0; j < points[0].Count; j++)
@@ -189,7 +195,6 @@ namespace cat_and_mouse.Domain
                     character.Position = points[i][j];
                 }
             }
-
         }
     }
 }

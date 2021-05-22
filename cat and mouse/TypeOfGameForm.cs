@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,6 +24,10 @@ namespace cat_and_mouse
         public static Mouse MousePlayer;
 
         public static GameState currentGameState = GameState.MapChoose;
+        public static PlayerState currentPlayerState = PlayerState.MouseBot; /// <summary>
+                                                                             /// //////////////
+                                                                             /// </summary>
+        private bool isFirstPress = true;
 
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
         private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
@@ -48,6 +53,7 @@ namespace cat_and_mouse
             WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
             KeyUp += OnKeyUp;
+            MouseDown += OnMouseDown;
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e)
@@ -61,8 +67,16 @@ namespace cat_and_mouse
             if (currentGameState == GameState.Game)
             {
                 Manipulator.OnClick(e, ref clientSize, ElementSize);
+                if (currentPlayerState == PlayerState.MouseBot)
+                {
+                    MousePlayer.Position = Manipulator.mouseWay.First();
+                    Manipulator.mouseWay.RemoveAt(1);
+                }
+                else
+                {
+                    Manipulator.MouseMove(MousePlayer, mouse, e);
+                }
                 Manipulator.CatMove(CatPlayer, cat, e);
-                Manipulator.MouseMove(MousePlayer, mouse, e);
                 PhysicsMap.IsCollide(CatPlayer);
                 PhysicsMap.IsCollide(MousePlayer);
                 ClientSize = clientSize;
@@ -193,11 +207,15 @@ namespace cat_and_mouse
             }
         }
         
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected void OnMouseDown(object sender, MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-            if (e.Button == MouseButtons.Left)
-                Manipulator.OnMouseDown(MousePlayer);
+            if (isFirstPress)
+            {
+                isFirstPress = false;
+                base.OnMouseDown(e);
+                if (e.Button == MouseButtons.Left)
+                    Manipulator.OnMouseDown(MousePlayer);
+            }
         }
     }
 }
