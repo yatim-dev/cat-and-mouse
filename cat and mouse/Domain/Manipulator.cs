@@ -19,7 +19,7 @@ namespace cat_and_mouse.Domain
         private static bool mouseBot = true;
 
         private static IEnumerable<List<Point>> pathsToCheese;
-        public static List<Point> mouseWay;
+        public static List<Point> mouseWay = new List<Point>();
 
         public static void OnClick(KeyEventArgs e,
             ref Size clientSize, int elementSize)
@@ -52,17 +52,17 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    catPlayer.deltaY = -2;
+                    catPlayer.deltaY = -1;
                     //PhysicsMap.IsCollide(catPlayer);
                     //catPlayer.deltaY = -1;
                     break;
                 case Keys.S:
-                    catPlayer.deltaY = 2;
+                    catPlayer.deltaY = 1;
                     //PhysicsMap.IsCollide(catPlayer);
                     //catPlayer.deltaY = 1;
                     break;
                 case Keys.A:
-                    catPlayer.deltaX = -2;
+                    catPlayer.deltaX = -1;
                     //PhysicsMap.IsCollide(catPlayer);
                     //catPlayer.deltaX = -1;
                     isFirstD = true;
@@ -75,7 +75,7 @@ namespace cat_and_mouse.Domain
 
                     break;
                 case Keys.D:
-                    catPlayer.deltaX = 2;
+                    catPlayer.deltaX = 1;
                     //PhysicsMap.IsCollide(catPlayer);
                     //catPlayer.deltaX = 1;
                     isFirstA = true;
@@ -163,11 +163,20 @@ namespace cat_and_mouse.Domain
         {
             TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.deltaX;
             TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.deltaY;
-            TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
-            TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
+            if (TypeOfGameForm.currentPlayerState == PlayerState.MouseBot)
+            {
+                TypeOfGameForm.MousePlayer.Position.X = mouseWay.First().X;
+                TypeOfGameForm.MousePlayer.Position.Y = mouseWay.First().Y;
+
+            }
+            else
+            {
+                TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
+                TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
+            }
         }
         
-        public static void OnMouseDown(Character character)
+        public static void MouseDown(Character character)
         {
             var lastMouseClick = new Point(character.Position.X, character.Position.Y);
             Point[] cheesePos = {Map.CheesePosition};
@@ -185,16 +194,16 @@ namespace cat_and_mouse.Domain
                     mouseWay.Add(t[j]);
         }
 
-        public static void MouseGo(Character character)
-        {
-            var points = pathsToCheese.ToArray();
-            for (int i = 0; i < points.Length; i++)
-            {
-                for (int j = 0; j < points[0].Count; j++)
-                {
-                    character.Position = points[i][j];
-                }
-            }
-        }
+        // public static void MouseGo(Character character)
+        // {
+        //     var points = pathsToCheese.ToArray();
+        //     for (int i = 0; i < points.Length; i++)
+        //     {
+        //         for (int j = 0; j < points[0].Count; j++)
+        //         {
+        //             character.Position = points[i][j];
+        //         }
+        //     }
+        // }
     }
 }

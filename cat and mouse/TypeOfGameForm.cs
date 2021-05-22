@@ -53,9 +53,8 @@ namespace cat_and_mouse
             WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
             KeyUp += OnKeyUp;
-            MouseDown += OnMouseDown;
         }
-
+        
         public void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (currentGameState == GameState.Game)
@@ -69,8 +68,10 @@ namespace cat_and_mouse
                 Manipulator.OnClick(e, ref clientSize, ElementSize);
                 if (currentPlayerState == PlayerState.MouseBot)
                 {
-                    MousePlayer.Position = Manipulator.mouseWay.First();
-                    Manipulator.mouseWay.RemoveAt(1);
+                    //MousePlayer.Position = Manipulator.mouseWay.First();
+                    Manipulator.mouseWay?.RemoveAt(0);
+                    Manipulator.ChangePosition();
+
                 }
                 else
                 {
@@ -207,14 +208,12 @@ namespace cat_and_mouse
             }
         }
         
-        protected void OnMouseDown(object sender, MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs mouseEventArgs)
         {
             if (isFirstPress)
             {
                 isFirstPress = false;
-                base.OnMouseDown(e);
-                if (e.Button == MouseButtons.Left)
-                    Manipulator.OnMouseDown(MousePlayer);
+                Manipulator.MouseDown(MousePlayer);
             }
         }
     }
