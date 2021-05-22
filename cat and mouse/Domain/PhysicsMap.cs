@@ -8,7 +8,10 @@ namespace cat_and_mouse.Domain
     {
         public static void IsCollide(Character character)
         {
-            if (character.Position.X + character.deltaX >= Map.MapWidth
+            
+            if (character.Position.X + character.deltaX < 0 
+                || character.Position.X + character.deltaX >= Map.MapWidth 
+                || character.Position.Y + character.deltaY < 0
                 || character.Position.Y + character.deltaY >= Map.MapHeight
                 || Map.MapArray[character.Position.X + character.deltaX, character.Position.Y + character.deltaY] == MapCell.Wall)
             {

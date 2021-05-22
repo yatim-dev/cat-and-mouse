@@ -67,5 +67,10 @@ namespace cat_and_mouse.Domain
                 }
             }
         }
+        public static bool InBounds(Point point)
+        {
+            var bounds = new Rectangle(0, 0, MapWidth, MapHeight);
+            return bounds.Contains(point);
+        }
     }
 }

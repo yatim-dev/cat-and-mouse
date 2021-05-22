@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,6 +16,8 @@ namespace cat_and_mouse.Domain
         private static bool isFirstD = true;
         private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
+        
+        public static IEnumerable<List<Point>> pathsToChests;
 
         public static void OnClick(KeyEventArgs e,
             ref Size clientSize, int elementSize)
@@ -45,13 +50,19 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    catPlayer.deltaY = -1;
+                    catPlayer.deltaY = -2;
+                    //PhysicsMap.IsCollide(catPlayer);
+                    //catPlayer.deltaY = -1;
                     break;
                 case Keys.S:
-                    catPlayer.deltaY = 1;
+                    catPlayer.deltaY = 2;
+                    //PhysicsMap.IsCollide(catPlayer);
+                    //catPlayer.deltaY = 1;
                     break;
                 case Keys.A:
-                    catPlayer.deltaX = -1;
+                    catPlayer.deltaX = -2;
+                    //PhysicsMap.IsCollide(catPlayer);
+                    //catPlayer.deltaX = -1;
                     isFirstD = true;
                     realFirstCat = false;
                     if (isFirstA && !realFirstCat)
@@ -62,7 +73,9 @@ namespace cat_and_mouse.Domain
 
                     break;
                 case Keys.D:
-                    catPlayer.deltaX = 1;
+                    catPlayer.deltaX = 2;
+                    //PhysicsMap.IsCollide(catPlayer);
+                    //catPlayer.deltaX = 1;
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
                     {
@@ -148,6 +161,35 @@ namespace cat_and_mouse.Domain
             TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.deltaY;
             TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
             TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
+        }
+        
+        public static void OnMouseDown(Character character)
+        {
+            var lastMouseClick = new Point(character.Position.X, character.Position.Y);
+            Point[] cheesePos = {Map.CheesePosition};
+            if (Map.MapArray[lastMouseClick.X, lastMouseClick.Y] == MapCell.Empty)
+            {
+                pathsToChests = BfsTask.FindPaths(lastMouseClick, cheesePos)
+                    .Select(x => x.ToList()).ToList();
+                foreach (var pathsToChest in pathsToChests)
+                    pathsToChest.Reverse();
+            }
+            MouseGo(character);
+        }
+
+        public static void MouseGo(Character character)
+        {
+            IEnumerable<List<Point>> a = new List<List<Point>>();
+            a = pathsToChests;
+            var points = a.ToArray();
+            for (int i = 0; i < points.Length; i++)
+            {
+                for (int j = 0; j < points[0].Count; j++)
+                {
+                    character.Position = points[i][j];
+                }
+            }
+
         }
     }
 }

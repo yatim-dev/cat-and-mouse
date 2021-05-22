@@ -192,5 +192,12 @@ namespace cat_and_mouse
                 GameLogics.CreateRestartButton(restart, Controls);
             }
         }
+        
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            if (e.Button == MouseButtons.Left)
+                Manipulator.OnMouseDown(MousePlayer);
+        }
     }
 }
