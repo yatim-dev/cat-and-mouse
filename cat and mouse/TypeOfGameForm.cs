@@ -110,7 +110,6 @@ namespace cat_and_mouse
                 Manipulator.AutoMove(MousePlayer);
             if(currentPlayerState == PlayerState.CatBot)
                 Manipulator.AutoMove(CatPlayer);
-            timer.Start();
         }
 
         public void Update(object sender, EventArgs e)
@@ -257,6 +256,8 @@ namespace cat_and_mouse
             
             Controls.Clear();
             currentGameState = GameState.MapChoose;
+            timer.Start();
+
         }
     }
 }
