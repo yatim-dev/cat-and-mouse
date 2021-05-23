@@ -21,7 +21,7 @@ namespace cat_and_mouse
         public static Mouse MousePlayer;
 
         public static GameState currentGameState = GameState.MapChoose;
-        public static PlayerState currentPlayerState = PlayerState.NoBot; 
+        public static PlayerState currentPlayerState = PlayerState.CatBot; 
                                                                              
         private bool isFirstPress = true;
 
@@ -29,6 +29,8 @@ namespace cat_and_mouse
         private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
         private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
         private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
+        private static readonly Bitmap PlayerChoise = new(MainPath + @"\Pictures\playerChoice.png");
+
 
         private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
         private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
@@ -61,22 +63,36 @@ namespace cat_and_mouse
         {
             if (currentGameState == GameState.Game)
             {
-                Manipulator.CatMove(CatPlayer, cat, e);
-                PhysicsMap.IsCollide(CatPlayer);
                 Manipulator.OnClick(e, ref clientSize, ElementSize);
                 if (currentPlayerState == PlayerState.MouseBot)
                 {
-                    Manipulator.mouseWay?.RemoveAt(0);
+                    Manipulator.CatMove(CatPlayer, cat, e);
+                    PhysicsMap.IsCollide(CatPlayer);
+                    Manipulator.autoWay?.RemoveAt(0);
                 }
-                else
+                if (currentPlayerState == PlayerState.CatBot)
                 {
                     Manipulator.MouseMove(MousePlayer, mouse, e);
                     PhysicsMap.IsCollide(MousePlayer);
+                    Manipulator.autoWay?.RemoveAt(0);
                 }
+                else
+                {
+                    Manipulator.CatMove(CatPlayer, cat, e);
+                    PhysicsMap.IsCollide(CatPlayer);
+                    Manipulator.MouseMove(MousePlayer, mouse, e);
+                    PhysicsMap.IsCollide(MousePlayer);
+                }
+                
                 Manipulator.ChangePosition();
                 ClientSize = clientSize;
                 Cat.StateCheck(CatPlayer, MousePlayer);
                 Mouse.StateCheck(MousePlayer);
+                if (currentPlayerState == PlayerState.CatBot)
+                {
+                    Manipulator.autoWay.Clear();
+                    Manipulator.AutoMove(CatPlayer);
+                }
             }
         }
 
@@ -91,11 +107,10 @@ namespace cat_and_mouse
         {
             CatPlayer = new Cat(Map.CatPosition.X, Map.CatPosition.Y);
             MousePlayer = new Mouse(Map.MousePosition.X, Map.MousePosition.Y);
-            if (isFirstPress)
-            {
-                isFirstPress = false;
-                Manipulator.MouseDown(MousePlayer);
-            } 
+            if(currentPlayerState == PlayerState.MouseBot)
+                Manipulator.AutoMove(MousePlayer);
+            if(currentPlayerState == PlayerState.CatBot)
+                Manipulator.AutoMove(CatPlayer);
             timer.Start();
         }
 
@@ -187,7 +202,7 @@ namespace cat_and_mouse
             if (currentGameState == GameState.CatWin)
             {
                 isFirstPress = true;
-                Manipulator.mouseWay.Clear();
+                Manipulator.autoWay.Clear();
                 ClientSize = new Size(catWin.Width, catWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
@@ -200,7 +215,7 @@ namespace cat_and_mouse
             if (currentGameState == GameState.MouseWin)
             {
                 isFirstPress = true;
-                Manipulator.mouseWay.Clear();
+                Manipulator.autoWay.Clear();
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
