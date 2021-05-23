@@ -169,7 +169,8 @@ namespace cat_and_mouse.Domain
                 TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
                 TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
             }
-            else
+            
+            if(TypeOfGameForm.currentPlayerState == PlayerState.NoBot)
             {
                 TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
                 TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;

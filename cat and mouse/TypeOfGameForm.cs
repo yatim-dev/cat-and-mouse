@@ -9,6 +9,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace cat_and_mouse
 {
+    //менюшка
     public sealed partial class TypeOfGameForm : Form
     {
         private Timer timer = new();
@@ -20,11 +21,9 @@ namespace cat_and_mouse
         public static Cat CatPlayer;
         public static Mouse MousePlayer;
 
-        public static GameState currentGameState = GameState.MapChoose;
-        public static PlayerState currentPlayerState = PlayerState.CatBot; 
-                                                                             
-        private bool isFirstPress = true;
-
+        public static GameState currentGameState = GameState.PlayerChoose;
+        public static PlayerState currentPlayerState; 
+        
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
         private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
         private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
@@ -76,7 +75,7 @@ namespace cat_and_mouse
                     PhysicsMap.IsCollide(MousePlayer);
                     Manipulator.autoWay?.RemoveAt(0);
                 }
-                else
+                if(currentPlayerState == PlayerState.NoBot)
                 {
                     Manipulator.CatMove(CatPlayer, cat, e);
                     PhysicsMap.IsCollide(CatPlayer);
@@ -90,7 +89,7 @@ namespace cat_and_mouse
                 Mouse.StateCheck(MousePlayer);
                 if (currentPlayerState == PlayerState.CatBot)
                 {
-                    Manipulator.autoWay.Clear();
+                    Manipulator.autoWay?.Clear();
                     Manipulator.AutoMove(CatPlayer);
                 }
             }
@@ -164,11 +163,10 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.MapChoose)
             {
-                isFirstPress = true;
                 ClientSize = new Size(menu.Width, menu.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
-                e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+               // e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                 menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
                 var top = 540;
@@ -192,16 +190,42 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.PlayerChoose)
             {
-                ClientSize = new Size(menu.Width, menu.Height);
+                ClientSize = new Size(PlayerChoise.Width, PlayerChoise.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
-                menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
-                e.Graphics.DrawImage(menu, 0, 0);
+                PlayerChoise.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                e.Graphics.DrawImage(PlayerChoise, 0, 0);
+                var top = 540;
+                var left = 300;
+                var ButtonsName = new[] {
+                    "MouseBot",
+                    "NoBot",
+                    "CatBot"
+                };
+                var ButtonsText = new[]
+                {
+                    "Mouse Bot",
+                    "Two Players",
+                    "Cat Bot"
+                };
+                for (var i = 0; i < 3; i++)
+                {
+                    var button = new Button();
+                    button.Left = left;
+                    button.Top = top;
+                    button.Height = 40;
+                    button.Width = 120;
+                    button.Name = ButtonsName[i];
+                    button.Text = ButtonsText[i];
+                    button.Click += PlayerChoiseButtonOnClick;
+
+                    Controls.Add(button);
+                    left += button.Width + 20;
+                }
             }
 
             if (currentGameState == GameState.CatWin)
             {
-                isFirstPress = true;
                 Manipulator.autoWay.Clear();
                 ClientSize = new Size(catWin.Width, catWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
@@ -214,7 +238,6 @@ namespace cat_and_mouse
 
             if (currentGameState == GameState.MouseWin)
             {
-                isFirstPress = true;
                 Manipulator.autoWay.Clear();
                 ClientSize = new Size(mouseWin.Width, mouseWin.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
@@ -224,6 +247,21 @@ namespace cat_and_mouse
                 Button restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);
             }
+        }
+        private void PlayerChoiseButtonOnClick(object? sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                if (button.Name == "MouseBot")
+                    currentPlayerState = PlayerState.MouseBot;
+                if (button.Name == "NoBot")
+                    currentPlayerState = PlayerState.NoBot;
+                if (button.Name == "CatBot")
+                    currentPlayerState = PlayerState.CatBot;
+            }
+            
+            Controls.Clear();
+            currentGameState = GameState.MapChoose;
         }
     }
 }
