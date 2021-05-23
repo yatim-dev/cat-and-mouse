@@ -15,10 +15,8 @@ namespace cat_and_mouse
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
+            if (disposing && (components != null)) 
                 components.Dispose();
-            }
 
             base.Dispose(disposing);
         }
@@ -37,10 +35,8 @@ namespace cat_and_mouse
             this.StartPosition = FormStartPosition.CenterScreen;
             this.WindowState = FormWindowState.Normal;
             this.Text = "cat and mouse";
-            
         }
 
         #endregion
-        
     }
 }
