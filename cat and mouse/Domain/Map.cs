@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
 using Point = System.Drawing.Point;
 
 namespace cat_and_mouse.Domain
@@ -66,11 +65,6 @@ namespace cat_and_mouse.Domain
                     e.DrawImage(empty, i * TypeOfGameForm.ElementSize, j * TypeOfGameForm.ElementSize);
                 }
             }
-        }
-        public static bool InBounds(Point point)
-        {
-            var bounds = new Rectangle(0, 0, MapWidth, MapHeight);
-            return bounds.Contains(point);
         }
     }
 }

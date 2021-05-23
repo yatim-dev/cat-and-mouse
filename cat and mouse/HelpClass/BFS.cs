@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
 
 namespace cat_and_mouse.Domain
@@ -11,14 +10,15 @@ namespace cat_and_mouse.Domain
         {
             for (var dy = -1; dy <= 1; dy++)
             for (var dx = -1; dx <= 1; dx++)
-                if (dx != 0 && dy != 0) continue;
-                else yield return new Point {X = point.X + dx, Y = point.Y + dy};
+                if (dx != 0 && dy != 0)
+                    continue;
+                else
+                    yield return new Point {X = point.X + dx, Y = point.Y + dy};
         }
-        
+
         private static bool DungeonCheck(Point point) =>
-            point.X < 0 || point.X >= Map.MapWidth
-                        || point.Y < 0 || point.Y >= Map.MapHeight
-                        || Map.MapArray[point.X, point.Y] != MapCell.Empty;
+            point.X < 0 || point.X >= Map.MapWidth || point.Y < 0 || point.Y >= Map.MapHeight ||
+            Map.MapArray[point.X, point.Y] != MapCell.Empty;
 
         public static IEnumerable<SinglyLinkedList<Point>> FindPaths(Point start, Point[] chests)
         {
@@ -32,8 +32,7 @@ namespace cat_and_mouse.Domain
                 if (DungeonCheck(point.Value)) continue;
                 foreach (var newPoint in CellChecker(point.Value))
                 {
-                    if (!visitedCell.Contains(newPoint))
-                        queue.Enqueue(new SinglyLinkedList<Point>(newPoint, point));
+                    if (!visitedCell.Contains(newPoint)) queue.Enqueue(new SinglyLinkedList<Point>(newPoint, point));
                     visitedCell.Add(newPoint);
                 }
 

@@ -16,11 +16,6 @@ namespace cat_and_mouse
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TypeOfGameForm());
-
-            // while (true)
-            // {
-            //     Application.Frame();
-            // }
         }
     }
 }
