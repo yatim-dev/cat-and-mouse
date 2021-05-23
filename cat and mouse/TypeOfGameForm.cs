@@ -45,9 +45,6 @@ namespace cat_and_mouse
             timer.Interval = 20;
             timer.Tick += Update;
             MaximizeBox = false;
-            clientSize = new Size(menu.Width, menu.Height);
-            StartPosition = FormStartPosition.CenterScreen;
-            WindowState = FormWindowState.Normal;
             KeyDown += OnPress;
             KeyUp += OnKeyUp;
         }
@@ -127,12 +124,8 @@ namespace cat_and_mouse
 
             LoadLevels();
             ClientSize = new Size(Map.MapWidth * ElementSize, Map.MapHeight * ElementSize);
-            StartPosition = FormStartPosition.CenterScreen;
-            WindowState = FormWindowState.Normal;
             Initialize();
             clientSize = ClientSize;
-            StartPosition = FormStartPosition.CenterScreen;
-            WindowState = FormWindowState.Normal;
             currentGameState = GameState.Game;
             Controls.Clear();
         }
@@ -166,7 +159,6 @@ namespace cat_and_mouse
                 ClientSize = new Size(menu.Width, menu.Height);
                 Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
-               // e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                 menu.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(menu, 0, 0);
                 var top = 540;
@@ -217,7 +209,7 @@ namespace cat_and_mouse
                     button.Width = 120;
                     button.Name = ButtonsName[i];
                     button.Text = ButtonsText[i];
-                    button.Click += PlayerChoiseButtonOnClick;
+                    button.Click += PlayerChoiceButtonOnClick;
 
                     Controls.Add(button);
                     left += button.Width + 20;
@@ -248,7 +240,7 @@ namespace cat_and_mouse
                 GameLogics.CreateRestartButton(restart, Controls);
             }
         }
-        private void PlayerChoiseButtonOnClick(object? sender, EventArgs e)
+        private void PlayerChoiceButtonOnClick(object sender, EventArgs e)
         {
             if (sender is Button button)
             {
