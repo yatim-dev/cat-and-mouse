@@ -12,7 +12,7 @@ namespace cat_and_mouse.Domain
             Controls.Add(restart);
             restart.Click += delegate
             {
-                TypeOfGameForm.currentGameState = GameState.MapChoose;
+                TypeOfGameForm.currentGameState = GameState.PlayerChoose;
                 Controls.Clear();
             };
         } 

@@ -57,37 +57,40 @@ namespace cat_and_mouse
 
         public void OnPress(object sender, KeyEventArgs e)
         {
-            if (currentGameState == GameState.Game)
+            if (currentGameState == GameState.Game || currentGameState == GameState.Pause)
             {
                 Manipulator.OnClick(e, ref clientSize, ElementSize);
-                if (currentPlayerState == PlayerState.MouseBot)
+                if (currentPlayerState == PlayerState.MouseBot && currentGameState == GameState.Game)
                 {
                     Manipulator.CatMove(CatPlayer, cat, e);
                     PhysicsMap.IsCollide(CatPlayer);
                     Manipulator.autoWay?.RemoveAt(0);
                 }
-                if (currentPlayerState == PlayerState.CatBot)
+                if (currentPlayerState == PlayerState.CatBot&& currentGameState == GameState.Game)
                 {
                     Manipulator.MouseMove(MousePlayer, mouse, e);
                     PhysicsMap.IsCollide(MousePlayer);
                     Manipulator.autoWay?.RemoveAt(0);
                 }
-                if(currentPlayerState == PlayerState.NoBot)
+                if(currentPlayerState == PlayerState.NoBot&& currentGameState == GameState.Game)
                 {
                     Manipulator.CatMove(CatPlayer, cat, e);
                     PhysicsMap.IsCollide(CatPlayer);
                     Manipulator.MouseMove(MousePlayer, mouse, e);
                     PhysicsMap.IsCollide(MousePlayer);
                 }
-                
-                Manipulator.ChangePosition();
-                ClientSize = clientSize;
-                Cat.StateCheck(CatPlayer, MousePlayer);
-                Mouse.StateCheck(MousePlayer);
-                if (currentPlayerState == PlayerState.CatBot)
+
+                if (currentGameState == GameState.Game)
                 {
-                    Manipulator.autoWay?.Clear();
-                    Manipulator.AutoMove(CatPlayer);
+                    Manipulator.ChangePosition();
+                    ClientSize = clientSize;
+                    Cat.StateCheck(CatPlayer, MousePlayer);
+                    Mouse.StateCheck(MousePlayer);
+                    if (currentPlayerState == PlayerState.CatBot)
+                    {
+                        Manipulator.autoWay?.Clear();
+                        Manipulator.AutoMove(CatPlayer);
+                    }
                 }
             }
         }
