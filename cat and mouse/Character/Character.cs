@@ -13,5 +13,14 @@ namespace cat_and_mouse.Domain
             Position.X = x;
             Position.Y = y;
         }
+        
+        public static void StateCheck(Character catPlayer, Character mousePlayer)
+        {
+            if (catPlayer.Position.X == mousePlayer.Position.X
+                && catPlayer.Position.Y == mousePlayer.Position.Y
+                && mousePlayer.Position.X == Map.CheesePosition.X
+                && mousePlayer.Position.Y == Map.CheesePosition.Y)
+                TypeOfGameForm.CurrentGameState = GameState.Draw;
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace cat_and_mouse
         private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
         private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
         private static readonly Bitmap PlayerChoice = new(MainPath + @"\Pictures\playerChoice.png");
+        private static readonly Bitmap Draw = new(MainPath + @"\Pictures\draw.png");
 
         private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
         private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
@@ -100,6 +101,7 @@ namespace cat_and_mouse
                     ClientSize = clientSize;
                     Cat.StateCheck(CatPlayer, MousePlayer);
                     Mouse.StateCheck(MousePlayer);
+                    Character.StateCheck(CatPlayer, MousePlayer);
                     if (CurrentPlayerState == PlayerState.CatBot)
                     {
                         GameLogics.AutoWay?.Clear();
@@ -180,7 +182,7 @@ namespace cat_and_mouse
                         Left = left,
                         Top = top,
                         Height = 40,
-                        Width = 120,
+                        Width = 150,
                         Name = "level" + i,
                         Text = "level " + i
                     };
@@ -209,7 +211,7 @@ namespace cat_and_mouse
                         Left = left,
                         Top = top,
                         Height = 40,
-                        Width = 120,
+                        Width = 150,
                         Name = buttonsName[i],
                         Text = buttonsText[i]
                     };
@@ -240,6 +242,17 @@ namespace cat_and_mouse
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
                 mouseWin.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
                 e.Graphics.DrawImage(mouseWin, 0, 0);
+                var restart = new Button();
+                GameLogics.CreateRestartButton(restart, Controls);
+            }
+
+            if (CurrentGameState == GameState.Draw)
+            {
+                ClientSize = new Size(Draw.Width, Draw.Height);
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+                Draw.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                e.Graphics.DrawImage(Draw, 0, 0);
                 var restart = new Button();
                 GameLogics.CreateRestartButton(restart, Controls);
             }

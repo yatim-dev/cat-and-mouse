@@ -14,6 +14,8 @@ namespace cat_and_mouse.Domain
         {
             restart.Left = 0;
             restart.Top = 0;
+            restart.Width = 150;
+            restart.Height = 40;
             restart.Text = "Restart";
             controls.Add(restart);
             restart.Click += delegate

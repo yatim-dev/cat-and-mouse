@@ -7,6 +7,7 @@
         Game,
         Pause,
         CatWin,
-        MouseWin
+        MouseWin,
+        Draw
     }
 }
