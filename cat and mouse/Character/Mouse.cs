@@ -6,9 +6,9 @@
         {
         }
 
-        public static void StateCheck(Character mousePlayer)
+        public static void StateCheck(Character character)
         {
-            if (mousePlayer.Position.X == Map.CheesePosition.X && mousePlayer.Position.Y == Map.CheesePosition.Y)
+            if (character.Position.X == Map.CheesePosition.X && character.Position.Y == Map.CheesePosition.Y)
                 TypeOfGameForm.CurrentGameState = GameState.MouseWin;
         }
     }

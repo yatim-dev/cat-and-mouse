@@ -6,9 +6,9 @@
         {
         }
 
-        public static void StateCheck(Character CatPlayer, Character MousePlayer)
+        public static void StateCheck(Character catPlayer, Character mousePlayer)
         {
-            if (CatPlayer.Position.X == MousePlayer.Position.X && CatPlayer.Position.Y == MousePlayer.Position.Y)
+            if (catPlayer.Position.X == mousePlayer.Position.X && catPlayer.Position.Y == mousePlayer.Position.Y)
                 TypeOfGameForm.CurrentGameState = GameState.CatWin;
         }
     }

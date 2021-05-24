@@ -13,6 +13,7 @@ namespace cat_and_mouse.Domain
         private static bool isFirstD = true;
         private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
+        private static bool isFirstG = true;
 
         public static void OnClick(KeyEventArgs e, ref Size clientSize, int elementSize)
         {
@@ -36,6 +37,14 @@ namespace cat_and_mouse.Domain
                     }
 
                     break;
+                case Keys.G:
+                    if (isFirstG)
+                    {
+                        isFirstG = false;
+                        Map.ChangeMap(TypeOfGameForm.MousePlayer);
+                    }
+
+                    break;
             }
         }
 
@@ -44,13 +53,13 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    catPlayer.deltaY = -1;
+                    catPlayer.DeltaY = -1;
                     break;
                 case Keys.S:
-                    catPlayer.deltaY = 1;
+                    catPlayer.DeltaY = 1;
                     break;
                 case Keys.A:
-                    catPlayer.deltaX = -1;
+                    catPlayer.DeltaX = -1;
                     isFirstD = true;
                     realFirstCat = false;
                     if (isFirstA && !realFirstCat)
@@ -61,7 +70,7 @@ namespace cat_and_mouse.Domain
 
                     break;
                 case Keys.D:
-                    catPlayer.deltaX = 1;
+                    catPlayer.DeltaX = 1;
                     isFirstA = true;
                     if (isFirstD && !realFirstCat)
                     {
@@ -79,13 +88,13 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.Up:
-                    mousePlayer.deltaY = -1;
+                    mousePlayer.DeltaY = -1;
                     break;
                 case Keys.Down:
-                    mousePlayer.deltaY = 1;
+                    mousePlayer.DeltaY = 1;
                     break;
                 case Keys.Left:
-                    mousePlayer.deltaX = -1;
+                    mousePlayer.DeltaX = -1;
                     isFirstRight = true;
                     realFirstMouse = false;
                     if (isFirstLeft && !realFirstMouse)
@@ -97,7 +106,7 @@ namespace cat_and_mouse.Domain
 
                     break;
                 case Keys.Right:
-                    mousePlayer.deltaX = 1;
+                    mousePlayer.DeltaX = 1;
                     isFirstLeft = true;
                     if (isFirstRight && !realFirstMouse)
                     {
@@ -115,28 +124,28 @@ namespace cat_and_mouse.Domain
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    TypeOfGameForm.CatPlayer.deltaY = 0;
+                    TypeOfGameForm.CatPlayer.DeltaY = 0;
                     break;
                 case Keys.S:
-                    TypeOfGameForm.CatPlayer.deltaY = 0;
+                    TypeOfGameForm.CatPlayer.DeltaY = 0;
                     break;
                 case Keys.A:
-                    TypeOfGameForm.CatPlayer.deltaX = 0;
+                    TypeOfGameForm.CatPlayer.DeltaX = 0;
                     break;
                 case Keys.D:
-                    TypeOfGameForm.CatPlayer.deltaX = 0;
+                    TypeOfGameForm.CatPlayer.DeltaX = 0;
                     break;
                 case Keys.Up:
-                    TypeOfGameForm.MousePlayer.deltaY = 0;
+                    TypeOfGameForm.MousePlayer.DeltaY = 0;
                     break;
                 case Keys.Down:
-                    TypeOfGameForm.MousePlayer.deltaY = 0;
+                    TypeOfGameForm.MousePlayer.DeltaY = 0;
                     break;
                 case Keys.Left:
-                    TypeOfGameForm.MousePlayer.deltaX = 0;
+                    TypeOfGameForm.MousePlayer.DeltaX = 0;
                     break;
                 case Keys.Right:
-                    TypeOfGameForm.MousePlayer.deltaX = 0;
+                    TypeOfGameForm.MousePlayer.DeltaX = 0;
                     break;
             }
         }
@@ -147,24 +156,24 @@ namespace cat_and_mouse.Domain
             {
                 TypeOfGameForm.MousePlayer.Position.X = GameLogics.AutoWay.First().X;
                 TypeOfGameForm.MousePlayer.Position.Y = GameLogics.AutoWay.First().Y;
-                TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.deltaX;
-                TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.deltaY;
+                TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.DeltaX;
+                TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.DeltaY;
             }
 
             if (TypeOfGameForm.CurrentPlayerState == PlayerState.CatBot)
             {
                 TypeOfGameForm.CatPlayer.Position.X = GameLogics.AutoWay.First().X;
                 TypeOfGameForm.CatPlayer.Position.Y = GameLogics.AutoWay.First().Y;
-                TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
-                TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
+                TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.DeltaX;
+                TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.DeltaY;
             }
 
             if (TypeOfGameForm.CurrentPlayerState == PlayerState.NoBot)
             {
-                TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.deltaX;
-                TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.deltaY;
-                TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.deltaX;
-                TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.deltaY;
+                TypeOfGameForm.MousePlayer.Position.X += TypeOfGameForm.MousePlayer.DeltaX;
+                TypeOfGameForm.MousePlayer.Position.Y += TypeOfGameForm.MousePlayer.DeltaY;
+                TypeOfGameForm.CatPlayer.Position.X += TypeOfGameForm.CatPlayer.DeltaX;
+                TypeOfGameForm.CatPlayer.Position.Y += TypeOfGameForm.CatPlayer.DeltaY;
             }
         }
     }

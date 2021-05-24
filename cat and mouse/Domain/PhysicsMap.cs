@@ -4,15 +4,15 @@
     {
         public static void IsCollide(Character character)
         {
-            if (character.Position.X + character.deltaX < 0 ||
-                character.Position.X + character.deltaX >= Map.MapWidth ||
-                character.Position.Y + character.deltaY < 0 ||
-                character.Position.Y + character.deltaY >= Map.MapHeight ||
-                Map.MapArray[character.Position.X + character.deltaX, character.Position.Y + character.deltaY] ==
+            if (character.Position.X + character.DeltaX < 0 ||
+                character.Position.X + character.DeltaX >= Map.MapWidth ||
+                character.Position.Y + character.DeltaY < 0 ||
+                character.Position.Y + character.DeltaY >= Map.MapHeight ||
+                Map.MapArray[character.Position.X + character.DeltaX, character.Position.Y + character.DeltaY] ==
                 MapCell.Wall)
             {
-                character.deltaX = 0;
-                character.deltaY = 0;
+                character.DeltaX = 0;
+                character.DeltaY = 0;
             }
         }
     }

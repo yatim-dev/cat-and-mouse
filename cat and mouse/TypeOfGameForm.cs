@@ -184,7 +184,7 @@ namespace cat_and_mouse
                         Height = 40,
                         Width = 150,
                         Name = "level" + i,
-                        Text = "level " + i
+                        Text = "level " + (i + 1)
                     };
                     button.Click += ChoiceMapButtonOnClick;
 
