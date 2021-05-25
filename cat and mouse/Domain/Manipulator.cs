@@ -1,5 +1,8 @@
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Media;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace cat_and_mouse.Domain
@@ -13,7 +16,8 @@ namespace cat_and_mouse.Domain
         private static bool isFirstD = true;
         private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
-        private static bool isFirstG = true;
+        private static bool isFirstShift = true;
+        public static readonly SoundPlayer explosionSound = new(TypeOfGameForm.MainPath + @"\Music\explosion.wav");
 
         public static void OnClick(KeyEventArgs e, ref Size clientSize, int elementSize)
         {
@@ -37,10 +41,13 @@ namespace cat_and_mouse.Domain
                     }
 
                     break;
-                case Keys.G:
-                    if (isFirstG)
+                case Keys.ShiftKey:
+                    if (isFirstShift)
                     {
-                        isFirstG = false;
+                        isFirstShift = false;
+                        // explosionSound.LoadAsync();
+                        // explosionSound.Play();
+                        //explosionSound.
                         Map.ChangeMap(TypeOfGameForm.MousePlayer);
                     }
 

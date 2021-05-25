@@ -99,9 +99,9 @@ namespace cat_and_mouse
                 {
                     Manipulator.ChangePosition();
                     ClientSize = clientSize;
-                    Cat.StateCheck(CatPlayer, MousePlayer);
-                    Mouse.StateCheck(MousePlayer);
-                    Character.StateCheck(CatPlayer, MousePlayer);
+                    PositionCheck.StateCatWinCheck(CatPlayer, MousePlayer);
+                    PositionCheck.StateMouseWinCheck(MousePlayer);
+                    PositionCheck.StateCheck(CatPlayer, MousePlayer);
                     if (CurrentPlayerState == PlayerState.CatBot)
                     {
                         GameLogics.AutoWay?.Clear();
