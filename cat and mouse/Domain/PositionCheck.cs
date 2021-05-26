@@ -1,6 +1,6 @@
 namespace cat_and_mouse.Domain
 {
-    public class PositionCheck
+    public static class PositionCheck
     {
         public static void StateCheck(Character catPlayer, Character mousePlayer)
         {
