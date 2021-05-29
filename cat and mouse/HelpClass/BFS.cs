@@ -16,13 +16,15 @@ namespace cat_and_mouse.Domain
                     yield return new Point {X = point.X + dx, Y = point.Y + dy};
         }
 
-        private static bool DungeonCheck(Point point) =>
-            point.X < 0 || point.X >= Map.MapWidth || point.Y < 0 || point.Y >= Map.MapHeight ||
-            Map.MapArray[point.X, point.Y] != MapCell.Empty;
+        private static bool DungeonCheck(Point point)
+        {
+            return point.X < 0 || point.X >= Map.MapWidth || point.Y < 0 || point.Y >= Map.MapHeight ||
+                   Map.MapArray[point.X, point.Y] != MapCell.Empty;
+        }
 
         public static IEnumerable<SinglyLinkedList<Point>> FindPaths(Point start, Point[] chests)
         {
-            var visitedCell = new HashSet<Point>() {start};
+            var visitedCell = new HashSet<Point> {start};
             var queue = new Queue<SinglyLinkedList<Point>>();
             queue.Enqueue(new SinglyLinkedList<Point>(start));
 

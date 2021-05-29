@@ -3,13 +3,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
-using Timer = System.Windows.Forms.Timer;
 
 namespace cat_and_mouse
 {
     public sealed partial class TypeOfGameForm : Form
     {
-        private readonly Timer timer = new();
         public const int ElementSize = 32;
 
         public static readonly string MainPath =
@@ -22,18 +20,19 @@ namespace cat_and_mouse
         public static PlayerState CurrentPlayerState;
 
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
-        private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
-        private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
-        private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
         private static readonly Bitmap PlayerChoice = new(MainPath + @"\Pictures\playerChoice.png");
         private static readonly Bitmap Draw = new(MainPath + @"\Pictures\draw.png");
+        private static string levelNumber;
 
         private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
-        private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
+        private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
         private readonly Bitmap cheese = new(MainPath + @"\Pictures\cheese.png");
+        private readonly Bitmap menu = new(MainPath + @"\Pictures\menu.png");
+        private readonly Bitmap mouse = new(MainPath + @"\Pictures\mouse.png");
+        private readonly Bitmap mouseWin = new(MainPath + @"\Pictures\mouseWin.png");
+        private readonly Timer timer = new();
 
         private Size clientSize;
-        private static string levelNumber;
 
         public TypeOfGameForm()
         {
@@ -61,7 +60,10 @@ namespace cat_and_mouse
             if (CurrentPlayerState == PlayerState.CatBot) GameLogics.AutoMove(CatPlayer);
         }
 
-        private void Update(object sender, EventArgs e) => Invalidate();
+        private void Update(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
 
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
@@ -128,11 +130,11 @@ namespace cat_and_mouse
         {
             if (sender is Button button)
             {
-                if (button.Name == "MouseBot") 
+                if (button.Name == "MouseBot")
                     CurrentPlayerState = PlayerState.MouseBot;
-                if (button.Name == "NoBot") 
+                if (button.Name == "NoBot")
                     CurrentPlayerState = PlayerState.NoBot;
-                if (button.Name == "CatBot") 
+                if (button.Name == "CatBot")
                     CurrentPlayerState = PlayerState.CatBot;
             }
 

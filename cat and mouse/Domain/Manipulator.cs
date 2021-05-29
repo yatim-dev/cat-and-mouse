@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace cat_and_mouse.Domain
         private static bool realFirstMouse = true;
         private static bool isFirstEsc = true;
         private static bool isFirstShift = true;
-        public static readonly SoundPlayer explosionSound = new(TypeOfGameForm.MainPath + @"\Music\explosion.wav");
+        private static readonly SoundPlayer explosionSound = new(TypeOfGameForm.MainPath + @"\Music\explosion.wav");
 
         public static void OnClick(KeyEventArgs e, ref Size clientSize, int elementSize)
         {

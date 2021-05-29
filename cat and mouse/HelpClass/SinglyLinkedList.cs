@@ -5,25 +5,25 @@ namespace cat_and_mouse.Domain
 {
     public class SinglyLinkedList<T> : IEnumerable<T>
     {
+        private readonly int length;
+        private readonly SinglyLinkedList<T> previous;
         public readonly T Value;
-        public readonly SinglyLinkedList<T> Previous;
-        public readonly int Length;
 
         public SinglyLinkedList(T value, SinglyLinkedList<T> previous = null)
         {
             Value = value;
-            Previous = previous;
-            Length = previous?.Length + 1 ?? 1;
+            this.previous = previous;
+            length = previous?.length + 1 ?? 1;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
             yield return Value;
-            var pathItem = Previous;
+            var pathItem = previous;
             while (pathItem != null)
             {
                 yield return pathItem.Value;
-                pathItem = pathItem.Previous;
+                pathItem = pathItem.previous;
             }
         }
 
