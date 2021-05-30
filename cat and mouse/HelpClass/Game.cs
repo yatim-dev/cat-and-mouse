@@ -2,6 +2,7 @@
 {
     public enum GameState //состяния игры
     {
+        Start,
         PlayerChoose,
         MapChoose,
         Game,

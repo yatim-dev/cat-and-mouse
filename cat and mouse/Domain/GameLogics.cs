@@ -12,13 +12,30 @@ namespace cat_and_mouse.Domain
 
         public static void CreateRestartButton(Button restart, Control.ControlCollection controls)
         {
-            restart.Left = 0;
-            restart.Top = 0;
+            restart.Left = 10;
+            restart.Top = 10;
             restart.Width = 150;
-            restart.Height = 40;
+            restart.Height = 80;
             restart.Text = "Restart";
+            restart.Font = new Font("Arial", 13);
             controls.Add(restart);
             restart.Click += delegate
+            {
+                TypeOfGameForm.CurrentGameState = GameState.PlayerChoose;
+                controls.Clear();
+            };
+        }
+        
+        public static void CreateStartButton(Button start, Control.ControlCollection controls)
+        {
+            start.Left = 1250;
+            start.Top = 950;
+            start.Width = 500;
+            start.Height = 100;
+            start.Text = "Start the game";
+            start.Font = new Font("Arial", 20);
+            controls.Add(start);
+            start.Click += delegate
             {
                 TypeOfGameForm.CurrentGameState = GameState.PlayerChoose;
                 controls.Clear();

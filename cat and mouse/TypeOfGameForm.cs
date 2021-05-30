@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Media;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
 
@@ -16,9 +15,7 @@ namespace cat_and_mouse
 
         public static Cat CatPlayer;
         public static Mouse MousePlayer;
-        private static readonly SoundPlayer mainSound = new(MainPath + @"\Music\MainGameTheme.wav");
 
-        
         public static GameState CurrentGameState = GameState.PlayerChoose;
         public static PlayerState CurrentPlayerState;
 
@@ -44,7 +41,6 @@ namespace cat_and_mouse
             timer.Interval = 20;
             timer.Tick += Update;
             MaximizeBox = false;
-            mainSound.PlayLooping();
             KeyDown += OnPress;
             KeyUp += OnKeyUp;
         }
