@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Media;
 using System.Windows.Forms;
 using cat_and_mouse.Domain;
 
@@ -16,13 +17,16 @@ namespace cat_and_mouse
         public static Cat CatPlayer;
         public static Mouse MousePlayer;
 
-        public static GameState CurrentGameState = GameState.PlayerChoose;
+        public static GameState CurrentGameState = GameState.Start;
         public static PlayerState CurrentPlayerState;
 
         private static readonly Bitmap Pause = new(MainPath + @"\Pictures\pause.png");
         private static readonly Bitmap PlayerChoice = new(MainPath + @"\Pictures\playerChoice.png");
+        private static readonly Bitmap Start = new(MainPath + @"\Pictures\start.png");
         private static readonly Bitmap Draw = new(MainPath + @"\Pictures\draw.png");
         private static string levelNumber;
+        public static readonly SoundPlayer mainSound = new(MainPath + @"\Music\MainGameTheme.wav");
+
 
         private readonly Bitmap cat = new(MainPath + @"\Pictures\cat.png");
         private readonly Bitmap catWin = new(MainPath + @"\Pictures\catWin.png");
@@ -41,6 +45,7 @@ namespace cat_and_mouse
             timer.Interval = 20;
             timer.Tick += Update;
             MaximizeBox = false;
+            mainSound.PlayLooping();
             KeyDown += OnPress;
             KeyUp += OnKeyUp;
         }
@@ -140,11 +145,22 @@ namespace cat_and_mouse
 
             Controls.Clear();
             CurrentGameState = GameState.MapChoose;
-            timer.Start();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (CurrentGameState == GameState.Start)
+            {
+                ClientSize = new Size(Start.Width, Start.Height);
+                Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+                Start.SetResolution(e.Graphics.DpiX, e.Graphics.DpiY);
+                e.Graphics.DrawImage(Start, 0, 0);
+                var start = new Button();
+                GameLogics.CreateStartButton(start, Controls);
+                timer.Start();
+            }
+            
             if (CurrentGameState == GameState.Game)
             {
                 Map.DrawMap(e.Graphics);

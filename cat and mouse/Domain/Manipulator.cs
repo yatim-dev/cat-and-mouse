@@ -44,9 +44,8 @@ namespace cat_and_mouse.Domain
                     if (isFirstShift)
                     {
                         isFirstShift = false;
-                        explosionSound.LoadAsync();
-                        new Task(() => explosionSound.Play()).Start();
-                        //explosionSound.
+                        // explosionSound.LoadAsync();
+                        // new Task(() => explosionSound.Play()).Start();
                         Map.ChangeMap(TypeOfGameForm.MousePlayer);
                     }
 
